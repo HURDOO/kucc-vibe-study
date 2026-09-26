@@ -97,10 +97,10 @@ export function Brand() {
   return (
     <a className="brand" href="#/" aria-label="KUCC 바이브코딩 스터디 홈">
       <span className="brand-symbol" aria-hidden="true">
-        k<span>↗</span>
+        <span>k</span>
       </span>
       <span>
-        KUCC<span className="brand-divider">/</span>
+        KUCC<span className="brand-divider">·</span>
         <span className="brand-sub">바이브코딩 스터디</span>
       </span>
     </a>
@@ -264,7 +264,8 @@ export function CopyButton({
         const field = document.createElement("textarea");
         field.value = text;
         field.readOnly = true;
-        field.style.cssText = "position:fixed;left:-9999px;top:0;font-size:16px";
+        field.style.cssText =
+          "position:fixed;left:-9999px;top:0;font-size:16px";
         const onCopy = (event: ClipboardEvent) => {
           if (event.clipboardData) {
             event.clipboardData.setData("text/plain", text);

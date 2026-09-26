@@ -17,8 +17,9 @@ import {
 function DocumentArtwork() {
   return (
     <div className="document-art" aria-hidden="true">
-      <div className="art-grid" />
-      <span className="art-caption">FROM AN IDEA, TO YOUR TOOL.</span>
+      <span className="art-caption">
+        <Icon name="file" size={18} /> 오늘 만드는 도구
+      </span>
       <div className="art-window">
         <div className="art-window-bar">
           <span className="window-dot" />
@@ -31,7 +32,7 @@ function DocumentArtwork() {
           <div className="art-file-label">
             <Icon name="file" size={17} />
             <span>이번 주 강의자료.pdf</span>
-            <span>3 pages</span>
+            <span>3페이지</span>
           </div>
           <div className="art-pages">
             {[1, 2, 3].map((n) => (
@@ -56,11 +57,11 @@ function DocumentArtwork() {
         </div>
       </div>
       <div className="art-note">
-        <span>01</span> 첫 번째, 내가 만든 도구.
-        <span className="note-arrow">↗</span>
+        <span>
+          <Icon name="check" size={16} />
+        </span>{" "}
+        필요한 페이지만 쏙, 저장 완료!
       </div>
-      <span className="art-plus plus-one">+</span>
-      <span className="art-plus plus-two">+</span>
     </div>
   );
 }
@@ -75,8 +76,8 @@ function CurriculumRows({ compact = false }: { compact?: boolean }) {
           key={week.number}
         >
           <span className="week-index">
-            <span>WEEK</span>
-            {String(week.number).padStart(2, "0")}
+            <Icon name={week.number <= 3 ? "file" : "grid"} size={24} />
+            <span>{week.number}주차</span>
           </span>
           <div className="week-description">
             <h3>{week.title}</h3>
@@ -89,7 +90,7 @@ function CurriculumRows({ compact = false }: { compact?: boolean }) {
           <span className={`status-label${week.number === 1 ? " active" : ""}`}>
             {week.number === 1 ? "자료 보기" : "미리보기"}
           </span>
-          <Icon name="up-right" size={20} />
+          <Icon name="chevron" size={18} />
         </a>
       ))}
     </div>
@@ -100,96 +101,93 @@ function Home() {
   return (
     <>
       <section className="home-hero container">
-        <div className="hero-topline">
-          <Eyebrow>KUCC VIBE CODING STUDY</Eyebrow>
-          <span className="hero-edition">7 WEEKS · FROM ZERO TO SOMETHING</span>
+        <div className="home-welcome">
+          <div>
+            <p>KUCC 바이브코딩 스터디</p>
+            <h1>작은 도구부터, 직접 만들어봐요.</h1>
+          </div>
+          <a href="#/guide" className="welcome-link">
+            처음 오셨나요? <Icon name="chevron" size={16} />
+          </a>
         </div>
         <div className="hero-grid">
           <div className="hero-copy">
-            <p className="hero-pretitle">코딩이 처음이어도 괜찮아요.</p>
-            <h1>
-              내가 필요한 도구,
+            <span className="hero-badge">
+              <span className="live-dot" /> 1주차 자료가 열렸어요
+            </span>
+            <h2>
+              내가 쓸 PDF 편집기,
               <br />
-              <span>내 손으로.</span>
-              <span className="title-square" />
-            </h1>
+              오늘 직접 만들어요.
+            </h2>
             <p className="hero-description">
-              머릿속에만 있던 아이디어를 화면 밖으로.
-              <br />
-              AI와 함께 만들고, 고치고, 직접 써보는 7주.
+              코딩이 처음이어도 괜찮아요.
+              <br /> 준비된 프롬프트로 시작하고, 내 말로 바꿔보세요.
             </p>
             <div className="hero-actions">
               <a className="button primary" href="#/week/1">
-                첫 번째 도구 만들기 <Icon name="arrow" size={18} />
-              </a>
-              <a className="text-link" href="#/curriculum">
-                7주 과정 살펴보기 <Icon name="chevron" size={15} />
+                1주차 실습 시작하기 <Icon name="arrow" size={18} />
               </a>
             </div>
             <div className="hero-meta">
-              <span>처음 만드는 사람을 위한</span>
-              <span>ChatGPT · Codex</span>
-              <span>Windows & Mac</span>
+              <span>필수 실습 60분</span>
+              <span>자유 실습 30분</span>
             </div>
           </div>
           <DocumentArtwork />
         </div>
       </section>
-      <section
-        className="container featured-section"
-        aria-labelledby="featured-title"
+      <nav
+        className="container resource-shortcuts"
+        aria-label="1주차 자료 바로가기"
       >
-        <div className="featured-card">
-          <div className="featured-number">
-            <span>START HERE</span>
-            <strong>
-              01<span>↗</span>
-            </strong>
-            <small>첫 번째 수업</small>
+        <a href="#/week/1">
+          <span className="shortcut-icon">
+            <Icon name="book" size={24} />
+          </span>
+          <div>
+            <strong>실습 안내</strong>
+            <p>순서대로 따라가요</p>
           </div>
-          <div className="featured-content">
-            <div className="featured-eyebrow">
-              <span className="live-dot" /> 바로 시작할 수 있어요{" "}
-              <span>필수 실습 60분 + 자유 실습 30분</span>
-            </div>
-            <h2 id="featured-title">PDF 편집기, 직접 만들어 쓰기</h2>
-            <p>
-              프롬프트를 복사해 작업을 시작하세요.
-              <br className="mobile-only" /> 만드는 동안, 무엇을 요청했는지 함께
-              살펴봅니다.
-            </p>
-            <div className="featured-links">
-              <a href="#/week/1">
-                실습 따라가기 <Icon name="arrow" size={16} />
-              </a>
-              <a href="#/slides/1/1">
-                <Icon name="play" size={15} /> 슬라이드
-              </a>
-              <a href="#/prompts?category=week1">
-                <Icon name="copy" size={15} /> 프롬프트
-              </a>
-            </div>
+          <Icon name="chevron" size={18} />
+        </a>
+        <a href="#/slides/1/1">
+          <span className="shortcut-icon">
+            <Icon name="play" size={24} />
+          </span>
+          <div>
+            <strong>발표 슬라이드</strong>
+            <p>오늘 수업 한눈에 보기</p>
           </div>
-        </div>
-      </section>
+          <Icon name="chevron" size={18} />
+        </a>
+        <a href="#/prompts">
+          <span className="shortcut-icon">
+            <Icon name="copy" size={24} />
+          </span>
+          <div>
+            <strong>프롬프트 모음</strong>
+            <p>필요할 때 복사해서 써요</p>
+          </div>
+          <Icon name="chevron" size={18} />
+        </a>
+      </nav>
       <section className="container curriculum-section">
         <div className="section-heading">
           <div>
-            <Eyebrow>OUR CURRICULUM</Eyebrow>
-            <h2>일곱 번의 수업, 하나의 내 프로젝트.</h2>
+            <h2>7주 동안 함께 만들 것들</h2>
+            <p>작은 도구로 연습하고, 나만의 프로젝트로 이어가요.</p>
           </div>
-          <p>
-            작은 도구로 시작해서
-            <br />
-            나만의 아이디어를 완성하기까지.
-          </p>
+          <a className="text-link" href="#/curriculum">
+            전체 보기 <Icon name="chevron" size={16} />
+          </a>
         </div>
         <div className="curriculum-phase">
           <span>
-            01—03 <b>함께 만들며 익히기</b>
+            <b>1–3주차</b> 함께 만들며 익히기
           </span>
           <span>
-            04—07 <b>내 프로젝트 완성하기</b>
+            <b>4–7주차</b> 내 프로젝트 완성하기
           </span>
         </div>
         <CurriculumRows compact />
@@ -202,14 +200,14 @@ function Home() {
         <div className="container">
           <div className="section-heading">
             <div>
-              <Eyebrow>HOW WE LEARN</Eyebrow>
-              <h2>일단 만들어보면서 배웁니다.</h2>
+              <h2>우리 스터디는 이렇게 진행해요</h2>
+              <p>처음부터 다 알 필요는 없어요. 하나씩 해보면 돼요.</p>
             </div>
           </div>
           <div className="way-grid">
             <article>
-              <span className="way-number">01 / START</span>
-              <h3>복사해서, 바로 시작.</h3>
+              <span className="way-number">1</span>
+              <h3>복사해서 바로 시작하기</h3>
               <p>
                 처음부터 잘 요청할 필요는 없어요.
                 <br />
@@ -217,8 +215,8 @@ function Home() {
               </p>
             </article>
             <article>
-              <span className="way-number">02 / MAKE IT YOURS</span>
-              <h3>써보고, 내 말로 수정.</h3>
+              <span className="way-number">2</span>
+              <h3>써보고 내 말로 수정하기</h3>
               <p>
                 버튼 하나부터 기능 하나까지.
                 <br />
@@ -226,8 +224,8 @@ function Home() {
               </p>
             </article>
             <article>
-              <span className="way-number">03 / GO FURTHER</span>
-              <h3>끝냈다면, 한 걸음 더.</h3>
+              <span className="way-number">3</span>
+              <h3>끝냈다면 추가 미션 도전</h3>
               <p>
                 필수 실습 아래에 추가 미션이 있어요.
                 <br />
@@ -352,9 +350,14 @@ function WeekOne() {
                 <button
                   key={step.id}
                   onClick={() =>
-                    document
-                      .getElementById(step.id)
-                      ?.scrollIntoView({ behavior: "smooth", block: "start" })
+                    document.getElementById(step.id)?.scrollIntoView({
+                      behavior: window.matchMedia(
+                        "(prefers-reduced-motion: reduce)",
+                      ).matches
+                        ? "instant"
+                        : "smooth",
+                      block: "start",
+                    })
                   }
                 >
                   <span>{String(i + 1).padStart(2, "0")}</span>

@@ -46,6 +46,7 @@ npm run preview
 - `src/App.tsx`: 페이지 구성과 수업 진행 순서
 - `src/components.tsx`: 공통 UI, 복사, 레포 URL 검증, 체크리스트 저장
 - `src/styles.css`: 색상, 타이포그래피, 반응형 화면
+- `DESIGN.md`: `seed-design` 레퍼런스와 적용 원칙
 
 수업은 60분 필수 실습 + 30분 자유 실습을 기준으로 작성했습니다. 1주차는 **실행 요청 먼저 → 구현 중 브리프 설명 → 실제 사용 → 자기 말로 수정** 순서입니다. 추가 미션은 첫 구현에 포함되지 않도록 브리프와 분리했습니다.
 
@@ -69,7 +70,11 @@ VITE_WEEK1_REPO_URL=https://github.com/ACCOUNT/REPOSITORY
 
 ## 디자인
 
-[GDGoC 바이브코딩 특강 사이트](https://gdg-vibecoding.vercel.app/)의 여백, 큰 제목, 절제된 포인트 색, 교안과 프롬프트의 분리를 참고했습니다. 구현, 시각 요소, 스터디 내용은 이 프로젝트에서 새로 작성했습니다. Pretendard를 자체 호스팅하며 폰트 라이선스는 `public/fonts/OFL.txt`에 있습니다.
+현재 디자인 레퍼런스는 **`seed-design`**([당근 SEED Design](https://seed-design.io/))입니다. 공식 팔레트, 역할 기반 색상, 타이포그래피, 둥근 컴포넌트와 액션 계층을 참고했습니다. 홈은 실습·슬라이드·프롬프트에 바로 접근하는 학습 홈으로 구성했습니다. 구체적인 토큰과 적용 원칙은 [DESIGN.md](./DESIGN.md)에 있습니다.
+
+SEED 패키지 의존성 없이 기존 React와 CSS로 구현했습니다. 당근 로고는 사용하지 않으며 공식 SEED 제품이 아닙니다. Pretendard를 자체 호스팅하고 폰트 라이선스는 `public/fonts/OFL.txt`에 있습니다.
+
+이전 GDGoC 레퍼런스 버전은 로컬 커밋 `02932c9`에 보존했습니다. 교안·프롬프트·추가 미션의 기능과 내용은 유지했습니다.
 
 ## 현재 범위
 
