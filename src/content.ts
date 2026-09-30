@@ -1,3 +1,5 @@
+import { weekOnePrompts } from "./week-one";
+
 export type Week = {
   number: number;
   title: string;
@@ -13,26 +15,26 @@ export const weeks: Week[] = [
     number: 1,
     title: "내가 쓸 도구, 내가 만들기",
     subtitle: "PDF 편집기 만들기",
-    topic: "PROJECT_BRIEF · 첫 번째 프롬프트",
+    topic: "PROJECT_BRIEF · IMPROVEMENTS_BRIEF",
     description:
-      "강의자료에서 필요한 페이지만 남기고 싶을 때. 내 컴퓨터에서 쓸 PDF 도구를 직접 만듭니다.",
-    outcome: "필요한 페이지를 남긴 PDF 파일",
+      "강의자료에 필기하고 페이지를 편집하는 PDF 도구를 만듭니다. 사용해본 경험을 브리프에 적고 한 번 더 개선합니다.",
+    outcome: "페이지 편집과 필기를 반영한 PDF 파일",
     goals: [
-      "준비된 레포를 가져오고 구현을 시작합니다.",
-      "PROJECT_BRIEF가 무엇을 전달하는지 살펴봅니다.",
-      "PDF를 직접 편집하고, 내 말로 한 번 더 고쳐봅니다.",
+      "준비된 레포를 가져오고 PROJECT_BRIEF를 함께 읽습니다.",
+      "Sol로 첫 버전을 구현하고 기본 기능을 확인합니다.",
+      "IMPROVEMENTS_BRIEF를 작성하고 두 번째 구현을 진행합니다.",
     ],
   },
   {
     number: 2,
     title: "내 도구에 주소가 생겼다",
     subtitle: "개인용 웹 도구 제작과 배포",
-    topic: "AGENTS.md · Skills",
+    topic: "AGENTS.md · Skills · 서버와 클라이언트",
     description:
       "나만 쓰던 도구를 친구도 열어볼 수 있도록. 작은 웹 도구를 만들고 인터넷에 올립니다.",
     outcome: "친구에게 보낼 수 있는 웹 주소",
     goals: [
-      "작은 웹 도구의 핵심 기능을 만듭니다.",
+      "서버와 클라이언트가 어떤 역할을 맡는지 이해합니다.",
       "프로젝트의 작업 규칙과 반복할 절차를 정합니다.",
       "배포한 주소를 다른 기기에서 열어봅니다.",
     ],
@@ -119,39 +121,7 @@ export type Prompt = {
   clone?: boolean;
 };
 export const prompts: Prompt[] = [
-  {
-    id: "1-1",
-    title: "준비된 레포 가져오기",
-    category: "week1",
-    when: "처음 시작할 때 · 폴더를 가져오는 요청",
-    clone: true,
-    text: "[실습 레포 주소]를 내 컴퓨터의 실제 바탕화면 위치에\nkucc-week1-pdf라는 폴더로 git clone해줘.\n\n같은 이름의 폴더가 이미 있으면 덮어쓰지 말고 알려줘.\n완료하면 복제한 폴더의 전체 경로를 알려줘.",
-    check: "바탕화면의 kucc-week1-pdf 폴더를 프로젝트로 열어주세요.",
-  },
-  {
-    id: "1-2",
-    title: "PROJECT_BRIEF대로 구현하기",
-    category: "week1",
-    when: "복제한 폴더를 프로젝트로 연 다음",
-    text: "PROJECT_BRIEF.md를 읽고 필수 기능을 구현해줘.\n필요한 설치와 실행, 동작 확인까지 진행해줘.\n\n구현이 끝나면 내가 도구를 열어 사용하는 방법과\nPDF로 확인할 항목을 짧게 알려줘.",
-    check: "Codex가 실제로 작업을 시작했는지 확인한 뒤 설명을 들어주세요.",
-  },
-  {
-    id: "1-3",
-    title: "원하는 부분 한 번 더 고치기",
-    category: "week1",
-    when: "완성된 도구를 직접 사용해본 다음",
-    text: "지금 도구에서 [바꾸고 싶은 부분]을 수정해줘.\n[어떻게 동작하거나 보이면 좋을지]가 내가 원하는 결과야.\n\n기존의 PDF 열기, 페이지 삭제, 저장 기능이\n계속 작동하는지도 확인해줘.",
-    check: "대괄호 부분을 내 상황으로 바꿔주세요. 한 번에 하나만 바꿔봅니다.",
-  },
-  {
-    id: "1-4",
-    title: "다음에도 다시 실행하기",
-    category: "week1",
-    when: "수업을 마치기 전",
-    text: "다음에 이 프로젝트를 다시 열었을 때 도구를 실행하는 방법을\nREADME.md에 초보자도 따라 할 수 있게 적어줘.\n\n지금 사용 중인 운영체제에 맞춰 설명하고,\n도구를 종료하는 방법도 함께 알려줘.",
-    check: "안내를 따라 도구를 종료했다가 다시 실행해보세요.",
-  },
+  ...weekOnePrompts,
   {
     id: "C-1",
     title: "막힌 상황 전달하기",
@@ -179,100 +149,4 @@ export const prompts: Prompt[] = [
   },
 ];
 
-export { default as brief } from "./materials/PROJECT_BRIEF.md?raw";
-
-export const missions = [
-  {
-    id: "rotate",
-    number: "01",
-    title: "거꾸로 스캔했다면?",
-    description: "선택한 페이지를 90도씩 회전하는 기능을 추가해보세요.",
-    done: "저장한 PDF를 다시 열어도 페이지가 회전되어 있어요.",
-    hint: "선택한 PDF 페이지를 90도씩 회전할 수 있게 해줘. 미리보기와 저장한 파일 모두에 회전을 적용하고, 기존 삭제와 저장 기능도 확인해줘.",
-    label: "페이지 회전",
-  },
-  {
-    id: "merge",
-    number: "02",
-    title: "강의자료가 두 개라면?",
-    description: "여러 PDF를 원하는 순서대로 하나의 파일로 합쳐보세요.",
-    done: "두 문서의 페이지가 빠짐없이 원하는 순서로 들어가 있어요.",
-    hint: "PDF 여러 개를 선택해서 하나로 합치는 기능을 추가해줘. 파일의 순서를 정할 수 있게 하고, 합친 결과를 새 PDF로 저장해줘.",
-    label: "파일 합치기",
-  },
-  {
-    id: "undo",
-    number: "03",
-    title: "앗, 잘못 지웠다!",
-    description: "방금 지운 페이지를 되돌리는 버튼을 만들어보세요.",
-    done: "실수로 삭제한 페이지가 원래 위치로 돌아와요.",
-    hint: "마지막으로 삭제한 페이지를 원래 위치로 복원하는 실행 취소 기능을 추가해줘. 되돌릴 작업이 없으면 버튼을 비활성화해줘.",
-    label: "실행 취소",
-  },
-];
-
-export const slides = [
-  {
-    eyebrow: "WEEK 01 · KUCC VIBE CODING",
-    title: "필요한 도구를,\n직접 만들어봅시다.",
-    body: "오늘은 PDF에서 필요한 페이지만 남기는 도구를 만듭니다.",
-    note: "ChatGPT 앱 · Codex · 내 컴퓨터",
-    type: "cover",
-  },
-  {
-    eyebrow: "01 / 먼저 시작하기",
-    title: "복사하고,\n작업을 시작하세요.",
-    body: "레포 가져오기 → 폴더를 프로젝트로 열기 → PROJECT_BRIEF대로 구현 요청하기",
-    note: "모두 구현을 시작했다면, 잠깐 화면에서 눈을 떼어주세요.",
-    type: "steps",
-  },
-  {
-    eyebrow: "02 / 방금 무엇을 시켰을까?",
-    title: "짧은 요청 뒤에\n설명서가 있습니다.",
-    body: "“PROJECT_BRIEF.md를 읽고 필수 기능을 구현해줘.”",
-    note: "프롬프트는 지금 할 일, 브리프는 무엇을 만들지 알려줍니다.",
-    type: "quote",
-  },
-  {
-    eyebrow: "03 / PROJECT_BRIEF",
-    title: "“PDF 편집기”만으로는\n알 수 없는 것들.",
-    body: "누가 쓰나요? · 어떤 기능이 필요한가요? · 이번에는 무엇을 만들지 않나요? · 어떻게 확인하나요?",
-    note: "로그인이 필요한지, 원본을 덮어써도 되는지. 말하지 않은 부분은 AI가 추측하게 됩니다.",
-    type: "list",
-  },
-  {
-    eyebrow: "04 / 오늘의 범위",
-    title: "열고. 지우고.\n새 파일로 저장하기.",
-    body: "PDF 본문 수정, 로그인, 온라인 보관은 이번에 만들지 않습니다.",
-    note: "원본은 그대로 두고, PDF는 브라우저 안에서 처리합니다.",
-    type: "scope",
-  },
-  {
-    eyebrow: "05 / 직접 확인하기",
-    title: "“완성했어요” 다음에\n우리가 할 일.",
-    body: "3쪽 이상인 PDF 열기 → 두 번째 페이지 삭제 → 저장 → 결과 파일 다시 열기",
-    note: "페이지가 빠졌나요? 남은 순서는 맞나요? 원본은 그대로인가요?",
-    type: "steps",
-  },
-  {
-    eyebrow: "06 / 막혔다면",
-    title: "어떻게 안 되는지\n함께 보여주세요.",
-    body: "내가 한 행동 / 기대한 결과 / 실제 결과 / 에러 원문 또는 화면",
-    note: "“저장 버튼을 눌렀는데 파일이 안 내려와. 화면에는 이 메시지가 보여.”",
-    type: "list",
-  },
-  {
-    eyebrow: "07 / 이제 내 말로",
-    title: "한 가지를\n더 바꿔보세요.",
-    body: "버튼 이름, 미리보기 크기, 삭제 전 확인. 직접 써보니 아쉬운 점을 골라보세요.",
-    note: "한 번 바꾼 다음에는 열기·삭제·저장도 다시 확인합니다.",
-    type: "cover",
-  },
-  {
-    eyebrow: "오늘 가져가는 것",
-    title: "다음에도 쓸 수 있는\n내 도구 하나.",
-    body: "도구를 다시 실행하는 방법까지 확인했다면, 오늘의 필수 미션 완료.",
-    note: "더 해보고 싶다면 → 페이지 회전 · 파일 합치기 · 실행 취소",
-    type: "end",
-  },
-];
+export { slides } from "./week-one";

@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { prompts, type Prompt } from "./content";
+import { weekOneRepository } from "./week-one";
 
 export function Icon({
   name = "arrow",
@@ -219,7 +220,7 @@ export function useSavedString(key: string, fallback = "") {
 }
 
 export function useProgress() {
-  const [raw, save] = useSavedString("kucc-week1-progress-v1", "[]");
+  const [raw, save] = useSavedString("kucc-week1-progress-v2", "[]");
   let checked: string[] = [];
   try {
     const parsed: unknown = JSON.parse(raw);
@@ -341,8 +342,8 @@ export function PromptCard({
 }) {
   const [open, setOpen] = useState(defaultOpen);
   const [repository, setRepository] = useSavedString(
-    "kucc-week1-repository",
-    import.meta.env.VITE_WEEK1_REPO_URL ?? "",
+    "kucc-week1-repository-v2",
+    import.meta.env.VITE_WEEK1_REPO_URL || weekOneRepository,
   );
   const id = useId();
   const valid = validRepository(repository.trim());
@@ -370,7 +371,7 @@ export function PromptCard({
       <div id={id} hidden={!open} className="prompt-body">
         {prompt.clone && (
           <div className="repo-field">
-            <label htmlFor={`${id}-repo`}>강사가 안내한 실습 레포 주소</label>
+            <label htmlFor={`${id}-repo`}>1주차 실습 레포 주소</label>
             <input
               id={`${id}-repo`}
               type="url"
@@ -385,7 +386,7 @@ export function PromptCard({
             <small id={`${id}-hint`}>
               {repository && !valid
                 ? "https://github.com/계정/저장소 형식의 주소를 입력해주세요."
-                : "주소를 넣으면 아래 프롬프트에 자동으로 반영돼요."}
+                : "수업 레포가 준비되어 있어요. 바로 아래 프롬프트를 복사하세요."}
             </small>
           </div>
         )}

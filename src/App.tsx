@@ -1,17 +1,14 @@
 import { useEffect, useState } from "react";
-import { brief, missions, prompts, slides, weeks, type Week } from "./content";
-import briefUrl from "./materials/PROJECT_BRIEF.md?url&no-inline";
+import { prompts, slides, weeks, type Week } from "./content";
+import WeekOne from "./WeekOne";
+import CodexVisual from "./CodexVisual";
 import {
-  Checklist,
-  CommonPrompt,
-  CopyButton,
   Eyebrow,
   Footer,
   Header,
   Icon,
   PromptCard,
   QuickHelp,
-  useProgress,
 } from "./components";
 
 function DocumentArtwork() {
@@ -49,7 +46,7 @@ function DocumentArtwork() {
             ))}
           </div>
           <div className="art-action-row">
-            <span>필요한 페이지만 남기고</span>
+            <span>페이지를 편집하고 필기한 뒤</span>
             <span className="art-save">
               새 PDF 저장 <Icon name="download" size={12} />
             </span>
@@ -60,7 +57,7 @@ function DocumentArtwork() {
         <span>
           <Icon name="check" size={16} />
         </span>{" "}
-        필요한 페이지만 쏙, 저장 완료!
+        내 필기까지 담아, 저장 완료!
       </div>
     </div>
   );
@@ -130,8 +127,8 @@ function Home() {
               </a>
             </div>
             <div className="hero-meta">
-              <span>필수 실습 60분</span>
-              <span>자유 실습 30분</span>
+              <span>브리프로 첫 구현</span>
+              <span>내 경험으로 개선</span>
             </div>
           </div>
           <DocumentArtwork />
@@ -225,11 +222,11 @@ function Home() {
             </article>
             <article>
               <span className="way-number">3</span>
-              <h3>끝냈다면 추가 미션 도전</h3>
+              <h3>개선 브리프로 다시 구현</h3>
               <p>
-                필수 실습 아래에 추가 미션이 있어요.
+                사용해본 경험을 브리프에 적어요.
                 <br />
-                궁금한 기능을 골라 더 만들어보세요.
+                필요한 기능을 골라 한 번 더 구현해요.
               </p>
             </article>
           </div>
@@ -262,338 +259,6 @@ function Curriculum() {
       </div>
       <CurriculumRows />
       <QuickHelp />
-    </div>
-  );
-}
-
-function LessonHeading({
-  number,
-  title,
-  description,
-}: {
-  number: string;
-  title: string;
-  description: string;
-}) {
-  return (
-    <div className="lesson-heading">
-      <span className="lesson-section-number">{number}</span>
-      <div>
-        <h2>{title}</h2>
-        <p>{description}</p>
-      </div>
-    </div>
-  );
-}
-
-function WeekOne() {
-  const { checked, toggle } = useProgress();
-  const steps = [
-    { id: "start", label: "바로 시작하기" },
-    { id: "understand", label: "만드는 동안 살펴보기" },
-    { id: "verify", label: "직접 써보고 확인하기" },
-    { id: "modify", label: "내 말로 바꿔보기" },
-    { id: "extra", label: "끝냈다면, 추가 미션" },
-  ];
-  const completionIds = [
-    "cloned",
-    "building",
-    "opened",
-    "deleted",
-    "saved",
-    "modified",
-    "restarted",
-  ];
-  const done = completionIds.filter((id) => checked.includes(id)).length;
-  return (
-    <div className="container page-container lesson-page">
-      <div className="breadcrumb">
-        <a href="#/curriculum">커리큘럼</a>
-        <Icon name="chevron" size={12} />
-        <span>1주차</span>
-      </div>
-      <div className="lesson-intro">
-        <div>
-          <Eyebrow>WEEK 01 · FIRST BUILD</Eyebrow>
-          <h1>
-            내가 쓸 도구,
-            <br />
-            내가 만들기.
-          </h1>
-          <p>
-            강의자료에서 필요한 페이지만 남기는 PDF 편집기.
-            <br />
-            오늘은 내 컴퓨터에서 쓸 도구 하나를 만듭니다.
-          </p>
-          <div className="lesson-meta">
-            <span>필수 실습 60분</span>
-            <span>자유 실습 30분</span>
-            <span>PROJECT_BRIEF</span>
-          </div>
-        </div>
-        <div className="lesson-intro-actions">
-          <a className="button outlined" href="#/slides/1/1">
-            <Icon name="play" size={16} /> 발표용 슬라이드{" "}
-            <Icon name="up-right" size={16} />
-          </a>
-          <a className="text-link" href={briefUrl} download="PROJECT_BRIEF.md">
-            <Icon name="download" size={16} /> PROJECT_BRIEF 받기
-          </a>
-        </div>
-      </div>
-      <div className="lesson-layout">
-        <aside className="lesson-sidebar">
-          <div className="sidebar-inner">
-            <span className="sidebar-label">오늘의 순서</span>
-            <nav aria-label="1주차 실습 단계">
-              {steps.map((step, i) => (
-                <button
-                  key={step.id}
-                  onClick={() =>
-                    document.getElementById(step.id)?.scrollIntoView({
-                      behavior: window.matchMedia(
-                        "(prefers-reduced-motion: reduce)",
-                      ).matches
-                        ? "instant"
-                        : "smooth",
-                      block: "start",
-                    })
-                  }
-                >
-                  <span>{String(i + 1).padStart(2, "0")}</span>
-                  {step.label}
-                  {i === 4 && <span className="optional-dot" />}
-                </button>
-              ))}
-            </nav>
-            <div className="progress-box">
-              <div>
-                <span>나의 체크리스트</span>
-                <strong>
-                  {done}
-                  <small> / 7</small>
-                </strong>
-              </div>
-              <progress value={done} max={7} aria-label="1주차 완료 진행률" />
-              <p>
-                {done === 7
-                  ? "필수 미션 완료! 추가 미션도 둘러보세요."
-                  : "체크한 항목은 이 브라우저에 저장돼요."}
-              </p>
-            </div>
-            <a href="#/prompts?category=week1" className="sidebar-link">
-              프롬프트만 모아보기 <Icon name="up-right" size={15} />
-            </a>
-          </div>
-        </aside>
-        <div className="lesson-main">
-          <section id="start" className="lesson-section">
-            <LessonHeading
-              number="01"
-              title="일단, 작업부터 시작해볼까요?"
-              description="아래 순서대로 복사해 Codex에 붙여넣으세요. 설명은 작업이 시작된 다음 함께 봅니다."
-            />
-            <div className="setup-strip">
-              <span>시작 전 잠깐</span>
-              <p>
-                ChatGPT 앱에서 <strong>Codex</strong>를 열고, 강사와{" "}
-                <strong>Sol 모델·권한 설정</strong>을 맞춰주세요.
-              </p>
-            </div>
-            <PromptCard prompt={prompts[0]} />
-            <Checklist
-              id="cloned"
-              checked={checked.includes("cloned")}
-              onChange={toggle}
-            >
-              복제한 폴더를 프로젝트로 열었어요.
-            </Checklist>
-            <div className="between-note">
-              <span>다음 프롬프트는</span>{" "}
-              <strong>방금 연 프로젝트 안에서</strong> 입력해주세요.
-            </div>
-            <PromptCard prompt={prompts[1]} />
-            <Checklist
-              id="building"
-              checked={checked.includes("building")}
-              onChange={toggle}
-            >
-              Codex가 구현을 시작했어요.
-            </Checklist>
-            <p className="small-note">
-              먼저 끝났다면 03단계에서 PDF를 열어보세요. 작업 시간은 기기와
-              상황에 따라 달라질 수 있어요.
-            </p>
-          </section>
-          <section id="understand" className="lesson-section">
-            <LessonHeading
-              number="02"
-              title="방금, 무엇을 요청했을까요?"
-              description="짧은 프롬프트 뒤에는 우리가 만들 도구의 설명서가 있습니다."
-            />
-            <div className="explain-pair">
-              <article>
-                <span>프롬프트</span>
-                <h3>지금 할 일을 알려주기</h3>
-                <p>
-                  “PROJECT_BRIEF.md를 읽고
-                  <br />
-                  필수 기능을 구현해줘.”
-                </p>
-              </article>
-              <article>
-                <span>PROJECT_BRIEF</span>
-                <h3>무엇을 만들지 정해두기</h3>
-                <p>
-                  누가 쓰는지, 꼭 필요한 기능,
-                  <br />
-                  이번에 만들지 않을 것, 완료 기준.
-                </p>
-              </article>
-            </div>
-            <details className="brief-details">
-              <summary>
-                <span>
-                  <Icon name="file" size={18} /> 오늘 사용한 PROJECT_BRIEF.md
-                </span>
-                <span className="details-plus">+</span>
-              </summary>
-              <div className="brief-content">
-                <div className="brief-tools">
-                  <span>PDF 편집기 · 수업용 초안</span>
-                  <a
-                    href={briefUrl}
-                    download="PROJECT_BRIEF.md"
-                    className="text-link"
-                  >
-                    <Icon name="download" size={15} /> 파일 받기
-                  </a>
-                </div>
-                <pre>{brief}</pre>
-              </div>
-            </details>
-            <div className="margin-note">
-              <span>기억할 것 하나</span>
-              <p>
-                “PDF 편집기”라고만 하면, 어떤 기능이 필요한지 AI가 추측하게
-                돼요.
-                <br />
-                <strong>원하는 결과와 확인 방법</strong>까지 함께 알려주세요.
-              </p>
-            </div>
-          </section>
-          <section id="verify" className="lesson-section">
-            <LessonHeading
-              number="03"
-              title="완성됐다면, 직접 써보세요."
-              description="Codex가 알려준 주소를 열고, 3쪽 이상인 연습용 PDF로 확인합니다."
-            />
-            <div className="verification-list">
-              <Checklist
-                id="opened"
-                checked={checked.includes("opened")}
-                onChange={toggle}
-              >
-                PDF를 열었고, 각 페이지가 보여요.
-              </Checklist>
-              <Checklist
-                id="deleted"
-                checked={checked.includes("deleted")}
-                onChange={toggle}
-              >
-                두 번째 페이지를 삭제했어요.
-              </Checklist>
-              <Checklist
-                id="saved"
-                checked={checked.includes("saved")}
-                onChange={toggle}
-              >
-                저장한 파일을 다시 열었어요. 나머지 순서와 원본도 그대로예요.
-              </Checklist>
-            </div>
-            <CommonPrompt />
-          </section>
-          <section id="modify" className="lesson-section">
-            <LessonHeading
-              number="04"
-              title="이번에는, 내 말로 한 번 더."
-              description="직접 써보니 아쉬운 점이 있나요? 작은 변경 하나를 골라 요청해보세요."
-            />
-            <div className="suggestion-chips">
-              <span>미리보기를 조금 더 크게</span>
-              <span>삭제 전에 한 번 확인하기</span>
-              <span>저장 버튼 이름 바꾸기</span>
-            </div>
-            <PromptCard prompt={prompts[2]} defaultOpen={false} />
-            <Checklist
-              id="modified"
-              checked={checked.includes("modified")}
-              onChange={toggle}
-            >
-              원하는 부분을 바꿨고, 기존 기능도 다시 확인했어요.
-            </Checklist>
-            <PromptCard prompt={prompts[3]} defaultOpen={false} />
-            <Checklist
-              id="restarted"
-              checked={checked.includes("restarted")}
-              onChange={toggle}
-            >
-              도구를 종료했다가 다시 실행할 수 있어요.
-            </Checklist>
-            <div className="finish-note">
-              <Icon name="check" size={22} />
-              <div>
-                <strong>여기까지 했다면, 오늘의 필수 실습 끝.</strong>
-                <p>내가 만든 도구를 다음 과제에서도 꺼내 써보세요.</p>
-              </div>
-            </div>
-          </section>
-          <section id="extra" className="lesson-section extra-section">
-            <Eyebrow>ONE MORE THING</Eyebrow>
-            <h2>
-              끝냈다면,
-              <br />
-              이런 기능도 추가해보세요.
-            </h2>
-            <p className="section-description">
-              전부 할 필요는 없어요. 내가 쓰고 싶은 기능 하나를 골라보세요.
-            </p>
-            {missions.map((mission) => (
-              <article className="mission-card" key={mission.id}>
-                <div className="mission-top">
-                  <span>MISSION {mission.number}</span>
-                  <span>{mission.label}</span>
-                </div>
-                <h3>{mission.title}</h3>
-                <p>{mission.description}</p>
-                <div className="mission-done">
-                  <Icon name="check" size={16} />
-                  <span>{mission.done}</span>
-                </div>
-                <details className="mission-hint">
-                  <summary>
-                    어떻게 요청할지 막혔다면 <span>+</span>
-                  </summary>
-                  <div>
-                    <p>{mission.hint}</p>
-                    <CopyButton text={mission.hint} label="힌트 복사" />
-                  </div>
-                </details>
-              </article>
-            ))}
-          </section>
-          <div className="next-week">
-            <span>NEXT WEEK</span>
-            <a href="#/week/2">
-              <div>
-                <h3>내 도구에 주소가 생겼다</h3>
-                <p>2주차 · 개인용 웹 도구 제작과 배포</p>
-              </div>
-              <Icon name="arrow" size={26} />
-            </a>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
@@ -728,7 +393,11 @@ function PromptsPage({ initialCategory }: { initialCategory: string | null }) {
       </p>
       <div className="prompt-library">
         {filtered.map((prompt) => (
-          <PromptCard key={prompt.id} prompt={prompt} defaultOpen={false} />
+          <PromptCard
+            key={prompt.id}
+            prompt={prompt}
+            defaultOpen={prompt.id === "1-1"}
+          />
         ))}
       </div>
       {filtered.length === 0 && (
@@ -851,7 +520,7 @@ function Guide() {
             <p>
               막힌 부분을 해결하거나
               <br />
-              추가 미션에 도전합니다.
+              개선 브리프를 적용합니다.
             </p>
           </div>
           <footer>10명의 스터디원, 함께하는 7주.</footer>
@@ -863,19 +532,19 @@ function Guide() {
         {[
           {
             q: "AI가 아직 작업 중인데, 다음 단계로 넘어가도 되나요?",
-            a: "구현이 끝날 때까지 새 수정 요청은 기다려주세요. 그동안 PROJECT_BRIEF 설명을 읽고, PDF에서 어떤 결과가 나와야 하는지 확인해두면 좋아요. 다음 단계에서 필요한 결과물이 나오지 않았다면 강사에게 알려주세요.",
+            a: "구현이 끝날 때까지 새 수정 요청은 기다려주세요. 그동안 Codex 설명을 듣거나, PDF에서 어떤 결과가 나와야 하는지 확인해두면 좋아요. 다음 단계에서 필요한 결과물이 나오지 않았다면 강사에게 알려주세요.",
           },
           {
             q: "똑같은 프롬프트를 넣었는데 화면이 달라요.",
-            a: "색이나 배치가 조금 다를 수 있어요. 수업에서는 기능이 되는지 먼저 확인합니다. PDF가 열리고, 선택한 페이지를 삭제하고, 새 파일을 저장할 수 있다면 다음 단계로 진행해도 괜찮아요.",
+            a: "색이나 배치가 조금 다를 수 있어요. 수업에서는 기능이 되는지 먼저 확인합니다. 1주차의 다섯 가지 기본 기능 체크리스트를 모두 확인한 뒤 개선 브리프를 작성해요.",
           },
           {
             q: "에러가 났는데 무슨 뜻인지 모르겠어요.",
             a: "어떤 순서로 무엇을 했는지, 어떤 결과를 기대했는지 적고 에러 원문이나 화면을 함께 전달해주세요. 프롬프트 모음의 “막힌 상황 전달하기”를 사용해도 좋아요. 계속 같은 곳에서 막히면 강사에게 알려주세요.",
           },
           {
-            q: "추가 미션은 전부 해야 하나요?",
-            a: "아니요. 필수 실습을 끝낸 뒤 더 만들어보고 싶을 때 선택하는 미션이에요. 한 가지를 골라 내 도구에 적용해보세요.",
+            q: "개선 후보는 전부 구현해야 하나요?",
+            a: "아니요. 직접 써보며 필요했던 기능을 골라요. 여러 개를 선택해도 되며, IMPROVEMENTS_BRIEF.txt에 우선순위를 적어주세요. 모르는 칸은 미정으로 두어도 됩니다.",
           },
           {
             q: "체크리스트는 다른 기기에서도 이어지나요?",
@@ -910,7 +579,10 @@ function SlideDeck({ index }: { index: number }) {
         event.metaKey ||
         event.altKey ||
         (event.target instanceof HTMLElement &&
-          ["INPUT", "TEXTAREA", "SELECT"].includes(event.target.tagName))
+          (event.target.closest(
+            "input, textarea, select, [contenteditable=true]",
+          ) ||
+            (event.key === " " && event.target.closest("button, a, summary"))))
       )
         return;
       if (["ArrowRight", "ArrowDown", " ", "PageDown"].includes(event.key)) {
@@ -963,7 +635,7 @@ function SlideDeck({ index }: { index: number }) {
             <div>
               {slides.map((item, i) => (
                 <button
-                  key={item.eyebrow}
+                  key={item.id}
                   className={i === index ? "selected" : ""}
                   onClick={() => go(i)}
                 >
@@ -982,7 +654,51 @@ function SlideDeck({ index }: { index: number }) {
               ))}
             </h1>
             <p className="slide-body">{slide.body}</p>
+            {slide.visual && <CodexVisual kind={slide.visual} />}
+            {slide.items && (
+              <ul className="slide-list">
+                {slide.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            )}
+            {slide.excerpt && (
+              <pre className="slide-excerpt">{slide.excerpt}</pre>
+            )}
+            {slide.table && (
+              <div className="model-table-wrap">
+                <table className="model-table">
+                  <thead>
+                    <tr>
+                      {slide.table[0].map((cell) => (
+                        <th key={cell} scope="col">
+                          {cell}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {slide.table.slice(1).map((row) => (
+                      <tr key={row[0]}>
+                        {row.map((cell, i) => (
+                          <td key={i}>{cell}</td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
             <p className="slide-note">{slide.note}</p>
+            {slide.links && (
+              <div className="source-links">
+                {slide.links.map((link) => (
+                  <a key={link.href} href={link.href}>
+                    {link.label} <Icon name="up-right" size={14} />
+                  </a>
+                ))}
+              </div>
+            )}
             {slide.type === "cover" && (
               <span className="slide-decoration" aria-hidden="true">
                 ↗
@@ -995,17 +711,13 @@ function SlideDeck({ index }: { index: number }) {
         <span className="slide-keyboard">
           ← → 이동 <span>·</span> O 목차 <span>·</span> Esc 실습으로
         </span>
-        <div className="slide-dots" aria-label="슬라이드 선택">
-          {slides.map((_, i) => (
-            <button
-              key={i}
-              className={i === index ? "selected" : ""}
-              aria-label={`${i + 1}번 슬라이드`}
-              aria-current={i === index ? "step" : undefined}
-              onClick={() => go(i)}
-            />
-          ))}
-        </div>
+        <button
+          className="slide-index-button"
+          onClick={() => setOverview(!overview)}
+          aria-expanded={overview}
+        >
+          전체 {slides.length}장 · 목차
+        </button>
         <div className="slide-pagination">
           <span>
             {String(index + 1).padStart(2, "0")}{" "}
@@ -1067,7 +779,11 @@ export default function App() {
     return () => window.removeEventListener("hashchange", update);
   }, []);
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "instant" });
+    const section =
+      path === "/week/1" ? new URLSearchParams(query).get("section") : null;
+    const target = section ? document.getElementById(section) : null;
+    if (target) target.scrollIntoView({ block: "start" });
+    else window.scrollTo({ top: 0, behavior: "instant" });
     const title = isSlide
       ? `1주차 슬라이드 ${slideIndex + 1}`
       : weekMatch
@@ -1081,7 +797,7 @@ export default function App() {
               : "바이브코딩 스터디";
     document.title = `KUCC — ${title}`;
     document.getElementById("main-content")?.focus({ preventScroll: true });
-  }, [path]);
+  }, [path, query]);
   if (isSlide) return <SlideDeck index={slideIndex} />;
   let page;
   if (path === "/") page = <Home />;
