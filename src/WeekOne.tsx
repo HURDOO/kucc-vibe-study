@@ -256,23 +256,27 @@ export default function WeekOne() {
               <span>시작 전</span>
               <p>
                 ChatGPT 앱에서 Codex를 열고, 강사와{" "}
-                <strong>Sol 모델·권한 설정</strong>을 맞춰주세요.
+                <strong>GPT-6.1 Sol 모델·권한 설정</strong>을 맞춰주세요.
               </p>
             </div>
             <PromptCard prompt={weekOnePrompts[0]} />
             <div className="discussion-card">
               <Eyebrow>복제를 기다리며</Eyebrow>
-              <h3>가볍게 자기소개</h3>
-              <p>학과, 학년, AI를 얼마나 써봤는지 이야기해요.</p>
-              <details>
-                <summary>스터디장 소개 예시</summary>
-                <p>
-                  컴퓨터학과 1학년이고, AI는 두 가지 방면으로 써봤습니다.
-                  바이브코딩으로 기기 간 파일을 간편하게 공유하는 개인
-                  클라우드를 만들었고, 수업 자료와 녹음을 ChatGPT에 올려
-                  슬라이드 옆에 설명을 적은 복습용 필기본도 만들고 있습니다.
-                </p>
-              </details>
+              <h3>AI, 얼마나 써보셨나요?</h3>
+              <p>
+                돌아가며 학과·학년과 AI 경험을 짧게 소개하거나, 아래 중 어디에
+                해당하는지 손을 들어 답해요.
+              </p>
+              <ul className="quote-list">
+                <li>완전 처음이에요</li>
+                <li>과제를 올려서 설명해 달라고 해요</li>
+                <li>코드를 짜 달라고 시켜본 적 있어요</li>
+                <li>ㅇㅇ 프로젝트를 만들어봤어요</li>
+              </ul>
+              <p className="small-note">
+                여러분의 경험에 맞춰 스터디 난이도를 조절하려고 물어봐요. 편하게
+                답해 주세요!
+              </p>
             </div>
             {check(
               "cloned",
@@ -333,7 +337,7 @@ export default function WeekOne() {
           <LessonSection
             id="build"
             number="03"
-            title="Sol에게 1차 구현 맡기기"
+            title="GPT-6.1 Sol에게 1차 구현 맡기기"
             description="브리프를 읽었으면 구현을 요청하세요. 작업하는 동안 Codex를 살펴봅니다."
           >
             <PromptCard prompt={weekOnePrompts[2]} />
@@ -439,16 +443,17 @@ export default function WeekOne() {
           <LessonSection
             id="build-again"
             number="06"
-            title="Sol에게 2차 구현 맡기기"
+            title="GPT-6.1 Sol에게 2차 구현 맡기기"
             description="저장한 개선 브리프를 바탕으로 다시 구현합니다. 기다리면서 모델과 전공 지식 이야기를 나눠요."
           >
             <PromptCard prompt={weekOnePrompts[3]} />
             <ModelTable />
             <p className="small-note">
-              역할은 수업용 예시입니다.{" "}
+              역할은 수업용 예시이고, 모델 이름은 발표 자료(2026-10-01 기준)를
+              따랐어요. 최신 정보는{" "}
               <a href={sources.models.href}>OpenAI 모델 안내</a>와{" "}
-              <a href={sources.opus.href}>Anthropic Opus 안내</a>를 2026-09-27에
-              확인했어요. 실제 선택지는 계정과 사용하는 도구에서 확인하세요.
+              <a href={sources.opus.href}>Anthropic Opus 안내</a>에서, 실제
+              선택지는 계정과 사용하는 도구에서 확인하세요.
             </p>
             <div className="discussion-card">
               <h3>에이전트를 나눠서 작업한다면?</h3>
@@ -456,7 +461,7 @@ export default function WeekOne() {
                 여러 모델을 연결한 환경에서는 Opus가 구현을 주도하고, Luna가
                 작은 수정을 맡고, Astra가 복잡한 판단을 돕는 구성을 생각해볼 수
                 있어요. 사용하는 도구의 모델 연결 기능과 별도 설정이 필요합니다.
-                오늘 실습은 Sol로 진행해요.
+                오늘 실습은 GPT-6.1 Sol로 진행해요.
               </p>
               <p>
                 병렬로 진행할 때는 각자 맡을 범위와 결과를 합치는 기준도

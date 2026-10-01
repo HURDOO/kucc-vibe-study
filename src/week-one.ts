@@ -16,7 +16,7 @@ export const weekOnePrompts: Prompt[] = [
     clone: true,
     text: "[실습 레포 주소] 를\n바탕화면에 git clone 해줘.",
     check:
-      "붙여넣기 전에 Codex, ‘나 대신 승인’, GPT 6.1 Sol · Extra High 설정을 확인하고, 승인 요청이 뜨면 허락해요.",
+      "붙여넣기 전에 Codex, ‘나 대신 승인’, GPT-6.1 Sol · Extra High 설정을 확인하고, 승인 요청이 뜨면 허락해요.",
   },
   {
     id: "1-2",
@@ -33,7 +33,7 @@ export const weekOnePrompts: Prompt[] = [
     when: "STEP 3 · PROJECT_BRIEF를 함께 읽은 다음",
     text: "PROJECT_BRIEF 기반으로 구현해줘",
     check:
-      "모델은 GPT 6.1 Sol, 추론 수준은 Extra High. 중간에 승인을 요청하면 내용을 읽고 허락해요.",
+      "모델은 GPT-6.1 Sol, 추론 수준은 Extra High. 중간에 승인을 요청하면 내용을 읽고 허락해요.",
   },
   {
     id: "1-4",
@@ -228,7 +228,7 @@ export const sources = {
   },
 };
 export const modelRows = [
-  ["GPT-6 Sol", "오늘의 1·2차 구현", "코딩과 에이전트 작업에 사용"],
+  ["GPT-6.1 Sol", "오늘의 1·2차 구현", "코딩과 에이전트 작업에 사용"],
   ["GPT-6 Luna", "범위가 작은 수정 예시", "정해진 작업의 효율을 중시"],
   ["GPT-6 Astra", "복잡한 판단 예시", "어려운 추론과 전체 작업에 사용"],
   [

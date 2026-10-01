@@ -1649,12 +1649,27 @@ details[open] > summary .details-plus {
 .discussion-card p strong {
   color: var(--fg);
 }
-.discussion-card summary {
-  font-weight: 700;
-  color: var(--brand-fg);
+.quote-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 4px 0 4px 20px;
+  border-left: 4px solid var(--brand-line);
+  list-style: none;
+  font-size: 1.0625rem;
+  color: var(--fg-muted);
 }
-.discussion-card details p {
-  margin-top: 8px;
+.quote-list li::before,
+.quote-list li::after {
+  color: var(--brand);
+  font-weight: 800;
+}
+.quote-list li::before {
+  content: "“";
+}
+.quote-list li::after {
+  content: "”";
 }
 .discussion-card .text-link {
   align-self: flex-start;

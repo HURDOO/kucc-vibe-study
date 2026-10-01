@@ -21,7 +21,7 @@ export const weeks: Week[] = [
     outcome: "페이지 편집과 필기를 반영한 PDF 파일",
     goals: [
       "준비된 레포를 가져오고 PROJECT_BRIEF를 함께 읽습니다.",
-      "Sol로 첫 버전을 구현하고 기본 기능을 확인합니다.",
+      "GPT-6.1 Sol로 첫 버전을 구현하고 기본 기능을 확인합니다.",
       "IMPROVEMENTS_BRIEF를 작성하고 두 번째 구현을 진행합니다.",
     ],
   },
