@@ -76,7 +76,7 @@ node /Users/hurdoo/coding/production/bin/deployctl.mjs --json --compact plan kuc
 - `src/App.tsx`: 페이지 구성과 발표 화면(1920×1080 캔버스를 화면에 맞춰 축소)
 - `src/components.tsx`: 공통 UI, 복사, 레포 URL 검증, 체크리스트 저장
 - `src/styles.css`: 색상, 타이포그래피, 반응형 화면
-- `DESIGN.md`: `seed-design` 레퍼런스와 적용 원칙
+- `DESIGN.md`: 발표 덱(`kucc-deck`) 기반 디자인 토큰과 적용 원칙
 
 1주차는 **레포 복제·자기소개 → 프로젝트 열기 → 브리프와 MVP 설명 → Sol 1차 구현·Codex 설명 → 기본 기능 확인 → 개선 브리프 작성 → Sol 2차 구현·모델과 전공 지식 이야기 → 결과 확인 → 다음 회차 예고** 순서입니다. 각자 결과물을 사용하기 전에 체크리스트와 개선 브리프 작성법까지 함께 안내합니다.
 
@@ -116,11 +116,11 @@ Codex 소개의 날씨 확률은 가상 수치이고, `tool: 파일 쓰기` 같�
 
 ## 디자인
 
-현재 디자인 레퍼런스는 **`seed-design`**([당근 SEED Design](https://seed-design.io/))입니다. 공식 팔레트, 역할 기반 색상, 타이포그래피, 둥근 컴포넌트와 액션 계층을 참고했습니다. 홈은 실습·슬라이드·프롬프트에 바로 접근하는 학습 홈으로 구성했습니다. 구체적인 토큰과 적용 원칙은 [DESIGN.md](./DESIGN.md)에 있습니다.
+사이트 전체가 1주차 발표 덱(claude.ai Artifact)과 같은 디자인을 씁니다. KUCC 빨강(`#c3201f`), Black Han Sans 제목, Noto Sans KR 본문, JetBrains Mono `// 라벨`과 `> STEP` 알약, 어두운 코드 창, 큰 외곽선 글자 장식이 공통 요소입니다. 구체적인 토큰과 적용 원칙은 [DESIGN.md](./DESIGN.md)에 있습니다.
 
-SEED 패키지 의존성 없이 기존 React와 CSS로 구현했습니다. 당근 로고는 사용하지 않으며 공식 SEED 제품이 아닙니다. Pretendard를 자체 호스팅하고 폰트 라이선스는 `public/fonts/OFL.txt`에 있습니다. 발표 슬라이드는 Artifact 덱의 디자인(KUCC 빨강, Black Han Sans·Noto Sans KR·JetBrains Mono)을 그대로 사용합니다. 세 글꼴은 Google Fonts 저장소의 OFL 원본을 서브셋해 `public/fonts/slides/`에 자체 호스팅하며 라이선스도 같은 폴더에 있습니다.
+세 글꼴은 Google Fonts 저장소의 OFL 원본을 서브셋해 `public/fonts/`에 자체 호스팅하며, 라이선스(`OFL-*.txt`)도 같은 폴더에 있습니다. 서브셋에 없는 드문 글자는 시스템 글꼴로 표시됩니다.
 
-이전 GDGoC 레퍼런스 버전은 로컬 커밋 `02932c9`에 보존했습니다. 현재 1주차 교안은 새 진행 계획에 맞춰 갱신했습니다.
+이전 디자인은 Git에 남아 있습니다. SEED 레퍼런스 버전은 태그 `snapshot/before-deck-design`, 그 이전 GDGoC 버전은 커밋 `02932c9`입니다. 되돌리려면 `git switch -c <새-브랜치> snapshot/before-deck-design`로 확인하거나, 디자인 변경 커밋을 `git revert` 하세요.
 
 ## 현재 범위
 

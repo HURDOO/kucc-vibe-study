@@ -8,88 +8,48 @@ import {
   Footer,
   Header,
   Icon,
+  PageIntro,
   PromptCard,
   QuickHelp,
 } from "./components";
 
-function DocumentArtwork() {
-  return (
-    <div className="document-art" aria-hidden="true">
-      <span className="art-caption">
-        <Icon name="file" size={18} /> 오늘 만드는 도구
-      </span>
-      <div className="art-window">
-        <div className="art-window-bar">
-          <span className="window-dot" />
-          <span className="window-dot" />
-          <span className="window-dot" />
-          <span>나의 PDF 도구</span>
-          <Icon name="up-right" size={13} />
-        </div>
-        <div className="art-window-body">
-          <div className="art-file-label">
-            <Icon name="file" size={17} />
-            <span>이번 주 강의자료.pdf</span>
-            <span>3페이지</span>
-          </div>
-          <div className="art-pages">
-            {[1, 2, 3].map((n) => (
-              <div className={`art-page page-${n}`} key={n}>
-                <span className="page-pin">{n === 2 ? "×" : "✓"}</span>
-                <div className="paper-heading" />
-                <div className="paper-line" />
-                <div className="paper-line short" />
-                <div className="paper-block" />
-                <div className="paper-line" />
-                <div className="paper-line" />
-                <span className="page-number">0{n}</span>
-              </div>
-            ))}
-          </div>
-          <div className="art-action-row">
-            <span>페이지를 편집하고 필기한 뒤</span>
-            <span className="art-save">
-              새 PDF 저장 <Icon name="download" size={12} />
-            </span>
-          </div>
-        </div>
-      </div>
-      <div className="art-note">
-        <span>
-          <Icon name="check" size={16} />
-        </span>{" "}
-        내 필기까지 담아, 저장 완료!
-      </div>
-    </div>
-  );
-}
-
 function CurriculumRows({ compact = false }: { compact?: boolean }) {
+  const parts = [
+    { label: "PART 1 · 1–3주차", title: "함께 만들며 익히기", from: 1, to: 3 },
+    { label: "PART 2 · 4–7주차", title: "내 프로젝트 완성하기", from: 4, to: 7 },
+  ];
   return (
     <div className="curriculum-list">
-      {weeks.map((week) => (
-        <a
-          href={`#/week/${week.number}`}
-          className={`curriculum-row${week.number === 1 ? " current" : ""}`}
-          key={week.number}
-        >
-          <span className="week-index">
-            <Icon name={week.number <= 3 ? "file" : "grid"} size={24} />
-            <span>{week.number}주차</span>
-          </span>
-          <div className="week-description">
-            <h3>{week.title}</h3>
-            <p>{week.subtitle}</p>
-            {!compact && (
-              <span className="week-detail">{week.description}</span>
-            )}
-          </div>
-          <span className="week-topic">{week.topic}</span>
-          <span className={`status-label${week.number === 1 ? " active" : ""}`}>
-            {week.number === 1 ? "자료 보기" : "미리보기"}
-          </span>
-          <Icon name="chevron" size={18} />
-        </a>
+      {parts.map((part) => (
+        <section className="curriculum-part" key={part.label}>
+          <h3 className="curriculum-part-title">
+            <span>// {part.label}</span> {part.title}
+          </h3>
+          {weeks
+            .filter((week) => week.number >= part.from && week.number <= part.to)
+            .map((week) => (
+              <a
+                href={`#/week/${week.number}`}
+                className={`curriculum-row${week.number === 1 ? " current" : ""}`}
+                key={week.number}
+              >
+                <span className="week-index">
+                  {String(week.number).padStart(2, "0")}
+                </span>
+                <div className="week-description">
+                  <h4>{week.title}</h4>
+                  <p>{week.subtitle}</p>
+                  {!compact && (
+                    <span className="week-detail">{week.description}</span>
+                  )}
+                </div>
+                <span className="week-topic">{week.topic}</span>
+                <span className="status-label">
+                  {week.number === 1 ? "자료 보기" : "미리보기"}
+                </span>
+              </a>
+            ))}
+        </section>
       ))}
     </div>
   );
@@ -98,95 +58,89 @@ function CurriculumRows({ compact = false }: { compact?: boolean }) {
 function Home() {
   return (
     <>
-      <section className="home-hero container">
-        <div className="home-welcome">
-          <div>
-            <p>KUCC 바이브코딩 스터디</p>
-            <h1>작은 도구부터, 직접 만들어봐요.</h1>
-          </div>
-          <a href="#/guide" className="welcome-link">
-            처음 오셨나요? <Icon name="chevron" size={16} />
-          </a>
-        </div>
-        <div className="hero-grid">
+      <section className="home-hero">
+        <span className="hero-mark" aria-hidden="true">
+          VIBE
+        </span>
+        <div className="container hero-inner">
           <div className="hero-copy">
-            <span className="hero-badge">
-              <span className="live-dot" /> 1주차 자료가 열렸어요
-            </span>
-            <h2>
-              내가 쓸 PDF 편집기,
+            <p className="step-pill">
+              <span aria-hidden="true">&gt;</span> WEEK 01 · 1주차 자료가
+              열렸어요
+            </p>
+            <Eyebrow>KUCC VIBE CODING STUDY · 7 WEEKS</Eyebrow>
+            <h1 className="gradient-title">
+              작은 도구부터,
               <br />
-              오늘 직접 만들어요.
-            </h2>
+              직접 만들어봐요.
+            </h1>
             <p className="hero-description">
-              코딩이 처음이어도 괜찮아요.
-              <br /> 준비된 프롬프트로 시작하고, 내 말로 바꿔보세요.
+              코딩이 처음이어도 괜찮아요. 기획서를 쓰고, 에이전트에게 맡기고,
+              결과를 확인하고, 다시 개선해요.
             </p>
             <div className="hero-actions">
               <a className="button primary" href="#/week/1">
                 1주차 실습 시작하기 <Icon name="arrow" size={18} />
               </a>
-            </div>
-            <div className="hero-meta">
-              <span>브리프로 첫 구현</span>
-              <span>내 경험으로 개선</span>
+              <a className="button outlined" href="#/slides/1/1">
+                <Icon name="play" size={16} /> 발표 슬라이드
+              </a>
             </div>
           </div>
-          <DocumentArtwork />
+          <img className="hero-logo" src="/slides/kucc-logo.svg" alt="" />
         </div>
       </section>
-      <nav
-        className="container resource-shortcuts"
-        aria-label="1주차 자료 바로가기"
-      >
-        <a href="#/week/1">
-          <span className="shortcut-icon">
-            <Icon name="book" size={24} />
-          </span>
-          <div>
-            <strong>실습 안내</strong>
-            <p>순서대로 따라가요</p>
-          </div>
-          <Icon name="chevron" size={18} />
-        </a>
-        <a href="#/slides/1/1">
-          <span className="shortcut-icon">
-            <Icon name="play" size={24} />
-          </span>
-          <div>
-            <strong>발표 슬라이드</strong>
-            <p>오늘 수업 한눈에 보기</p>
-          </div>
-          <Icon name="chevron" size={18} />
-        </a>
-        <a href="#/prompts">
-          <span className="shortcut-icon">
-            <Icon name="copy" size={24} />
-          </span>
-          <div>
-            <strong>프롬프트 모음</strong>
-            <p>필요할 때 복사해서 써요</p>
-          </div>
-          <Icon name="chevron" size={18} />
-        </a>
-      </nav>
-      <section className="container curriculum-section">
+      <section className="container home-section">
         <div className="section-heading">
           <div>
+            <Eyebrow>THIS WEEK</Eyebrow>
+            <h2>내가 쓸 PDF 편집기, 오늘 직접 만들어요.</h2>
+            <p>준비된 프롬프트로 시작하고, 내 말로 바꿔보세요.</p>
+          </div>
+        </div>
+        <nav className="resource-shortcuts" aria-label="1주차 자료 바로가기">
+          {[
+            {
+              href: "#/week/1",
+              icon: "book" as const,
+              title: "실습 안내",
+              text: "복제부터 2차 개선까지 순서대로 따라가요",
+            },
+            {
+              href: "#/slides/1/1",
+              icon: "play" as const,
+              title: "발표 슬라이드",
+              text: "오늘 수업 45장을 한눈에 보기",
+            },
+            {
+              href: "#/prompts",
+              icon: "copy" as const,
+              title: "프롬프트 모음",
+              text: "필요할 때 복사해서 써요",
+            },
+          ].map((item, i) => (
+            <a href={item.href} key={item.href}>
+              <span className="shortcut-top">
+                <Icon name={item.icon} size={26} />
+                <span>{String(i + 1).padStart(2, "0")}</span>
+              </span>
+              <strong>{item.title}</strong>
+              <p>{item.text}</p>
+              <Icon name="arrow" size={20} className="shortcut-arrow" />
+            </a>
+          ))}
+        </nav>
+      </section>
+      <section className="container home-section">
+        <div className="section-heading">
+          <div>
+            <Eyebrow>CURRICULUM</Eyebrow>
             <h2>7주 동안 함께 만들 것들</h2>
             <p>작은 도구로 연습하고, 나만의 프로젝트로 이어가요.</p>
           </div>
           <a className="text-link" href="#/curriculum">
-            전체 보기 <Icon name="chevron" size={16} />
+            전체 보기 <Icon name="arrow" size={16} />
           </a>
-        </div>
-        <div className="curriculum-phase">
-          <span>
-            <b>1–3주차</b> 함께 만들며 익히기
-          </span>
-          <span>
-            <b>4–7주차</b> 내 프로젝트 완성하기
-          </span>
         </div>
         <CurriculumRows compact />
         <p className="section-footnote">
@@ -194,44 +148,42 @@ function Home() {
           채워집니다.
         </p>
       </section>
-      <section className="study-way">
-        <div className="container">
-          <div className="section-heading">
-            <div>
-              <h2>우리 스터디는 이렇게 진행해요</h2>
-              <p>처음부터 다 알 필요는 없어요. 하나씩 해보면 돼요.</p>
-            </div>
-          </div>
-          <div className="way-grid">
-            <article>
-              <span className="way-number">1</span>
-              <h3>복사해서 바로 시작하기</h3>
-              <p>
-                처음부터 잘 요청할 필요는 없어요.
-                <br />
-                준비된 프롬프트로 첫 도구를 만듭니다.
-              </p>
-            </article>
-            <article>
-              <span className="way-number">2</span>
-              <h3>써보고 내 말로 수정하기</h3>
-              <p>
-                버튼 하나부터 기능 하나까지.
-                <br />
-                직접 써보며 필요한 것을 바꿔봅니다.
-              </p>
-            </article>
-            <article>
-              <span className="way-number">3</span>
-              <h3>개선 브리프로 다시 구현</h3>
-              <p>
-                사용해본 경험을 브리프에 적어요.
-                <br />
-                필요한 기능을 골라 한 번 더 구현해요.
-              </p>
-            </article>
+      <section className="container home-section">
+        <div className="section-heading">
+          <div>
+            <Eyebrow>HOW WE STUDY</Eyebrow>
+            <h2>우리 스터디는 이렇게 진행해요</h2>
+            <p>처음부터 다 알 필요는 없어요. 하나씩 해보면 돼요.</p>
           </div>
         </div>
+        <div className="way-grid">
+          {[
+            {
+              title: "복사해서 바로 시작하기",
+              text: "처음부터 잘 요청할 필요는 없어요. 준비된 프롬프트로 첫 도구를 만듭니다.",
+            },
+            {
+              title: "써보고 내 말로 수정하기",
+              text: "버튼 하나부터 기능 하나까지. 직접 써보며 필요한 것을 바꿔봅니다.",
+            },
+            {
+              title: "개선 브리프로 다시 구현",
+              text: "사용해본 경험을 브리프에 적어요. 필요한 기능을 골라 한 번 더 구현해요.",
+            },
+          ].map((item, i) => (
+            <article key={item.title}>
+              <span className="way-number">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </article>
+          ))}
+        </div>
+        <p className="loop-strip">
+          <span aria-hidden="true">↺</span> 다시 01로 — 원하는 만큼 반복하면
+          계속 좋아져요
+        </p>
       </section>
       <div className="container home-help">
         <QuickHelp />
@@ -243,21 +195,23 @@ function Home() {
 function Curriculum() {
   return (
     <div className="container page-container">
-      <div className="page-intro">
-        <Eyebrow>THE SEVEN-WEEK JOURNEY</Eyebrow>
-        <h1>
-          이번 주에는
-          <br />
-          무엇을 만들어볼까요?
-        </h1>
-        <p>
-          첫 도구부터 나만의 프로젝트까지. 각 주차에서 자료와 실습을 확인하세요.
-        </p>
-      </div>
-      <div className="curriculum-phase">
-        <span>7주 과정</span>
-        <span>함께하는 60분 + 자유 실습 30분</span>
-      </div>
+      <PageIntro
+        eyebrow="THE SEVEN-WEEK JOURNEY"
+        title={
+          <>
+            이번 주에는
+            <br />
+            무엇을 만들어볼까요?
+          </>
+        }
+        description="첫 도구부터 나만의 프로젝트까지. 각 주차에서 자료와 실습을 확인하세요."
+        mark="07"
+      >
+        <div className="intro-chips">
+          <span>7주 과정</span>
+          <span>함께하는 60분 + 자유 실습 30분</span>
+        </div>
+      </PageIntro>
       <CurriculumRows />
       <QuickHelp />
     </div>
@@ -269,14 +223,15 @@ function UpcomingWeek({ week }: { week: Week }) {
     <div className="container page-container upcoming-page">
       <div className="breadcrumb">
         <a href="#/curriculum">커리큘럼</a>
-        <Icon name="chevron" size={12} />
+        <span aria-hidden="true">/</span>
         <span>{week.number}주차</span>
       </div>
-      <div className="page-intro">
-        <Eyebrow>WEEK {String(week.number).padStart(2, "0")} · PREVIEW</Eyebrow>
-        <h1>{week.title}</h1>
-        <p>{week.description}</p>
-      </div>
+      <PageIntro
+        eyebrow={`WEEK ${String(week.number).padStart(2, "0")} · PREVIEW`}
+        title={week.title}
+        description={week.description}
+        mark={String(week.number).padStart(2, "0")}
+      />
       <div className="upcoming-grid">
         <div>
           <span className="small-label">이번 주에 만드는 것</span>
@@ -345,15 +300,18 @@ function PromptsPage({ initialCategory }: { initialCategory: string | null }) {
   );
   return (
     <div className="container page-container prompts-page">
-      <div className="page-intro">
-        <Eyebrow>COPY, PASTE, AND MAKE</Eyebrow>
-        <h1>
-          필요한 순간에,
-          <br />
-          꺼내 쓰는 프롬프트.
-        </h1>
-        <p>수업에서 놓쳤어도 괜찮아요. 여기서 복사해서 이어가세요.</p>
-      </div>
+      <PageIntro
+        eyebrow="COPY, PASTE, AND MAKE"
+        title={
+          <>
+            필요한 순간에,
+            <br />
+            꺼내 쓰는 프롬프트.
+          </>
+        }
+        description="수업에서 놓쳤어도 괜찮아요. 여기서 복사해서 이어가세요."
+        mark=">_"
+      />
       <div className="prompt-filter-bar">
         <div className="filter-tabs" aria-label="프롬프트 분류">
           {[
@@ -432,18 +390,18 @@ function Guide() {
   const [os, setOs] = useState<"windows" | "mac">("windows");
   return (
     <div className="container page-container guide-page">
-      <div className="page-intro">
-        <Eyebrow>A LITTLE HELP ALONG THE WAY</Eyebrow>
-        <h1>
-          처음이니까,
-          <br />
-          같이 확인해요.
-        </h1>
-        <p>
-          환경 설정은 0주차 안내를 따라 준비하고, 수업에서는 바로 만들기를
-          시작합니다.
-        </p>
-      </div>
+      <PageIntro
+        eyebrow="A LITTLE HELP ALONG THE WAY"
+        title={
+          <>
+            처음이니까,
+            <br />
+            같이 확인해요.
+          </>
+        }
+        description="환경 설정은 0주차 안내를 따라 준비하고, 수업에서는 바로 만들기를 시작합니다."
+        mark="?"
+      />
       <div className="guide-grid">
         <section>
           <span className="small-label">수업에 가져올 것</span>
@@ -772,17 +730,23 @@ function SlideDeck({ index }: { index: number }) {
 
 function NotFound() {
   return (
-    <div className="container not-found">
-      <Eyebrow>404 · 길을 조금 벗어났네요</Eyebrow>
-      <h1>
-        이 페이지는
-        <br />
-        아직 없어요.
-      </h1>
-      <p>커리큘럼에서 찾는 수업을 골라주세요.</p>
-      <a href="#/curriculum" className="button primary">
-        수업 자료로 돌아가기 <Icon name="arrow" />
-      </a>
+    <div className="container page-container not-found">
+      <PageIntro
+        eyebrow="404 · 길을 조금 벗어났네요"
+        title={
+          <>
+            이 페이지는
+            <br />
+            아직 없어요.
+          </>
+        }
+        description="커리큘럼에서 찾는 수업을 골라주세요."
+        mark="404"
+      >
+        <a href="#/curriculum" className="button primary">
+          수업 자료로 돌아가기 <Icon name="arrow" />
+        </a>
+      </PageIntro>
     </div>
   );
 }

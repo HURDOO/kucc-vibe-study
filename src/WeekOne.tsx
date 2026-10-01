@@ -42,11 +42,11 @@ function LessonSection({
   return (
     <section id={id} className="lesson-section">
       <div className="lesson-heading">
-        <span className="lesson-section-number">{number}</span>
-        <div>
-          <h2>{title}</h2>
-          <p>{description}</p>
-        </div>
+        <p className="step-pill">
+          <span aria-hidden="true">&gt;</span> STEP {number}
+        </p>
+        <h2>{title}</h2>
+        <p>{description}</p>
       </div>
       {children}
     </section>
@@ -153,29 +153,34 @@ export default function WeekOne() {
     <div className="container page-container lesson-page">
       <div className="breadcrumb">
         <a href="#/curriculum">커리큘럼</a>
-        <Icon name="chevron" size={12} />
+        <span aria-hidden="true">/</span>
         <span>1주차</span>
       </div>
       <div className="lesson-intro">
+        <span className="page-mark" aria-hidden="true">
+          01
+        </span>
         <div>
           <Eyebrow>WEEK 01 · BUILD, TRY, IMPROVE</Eyebrow>
-          <h1>
+          <h1 className="gradient-title">
             내가 쓸 도구,
             <br />
             내가 만들기.
           </h1>
-          <p>
+          <p className="page-description">
             강의자료에 필기하고 페이지를 편집하는 PDF 도구.
             <br />첫 버전을 써보고, 내 브리프로 한 번 더 개선합니다.
           </p>
           <div className="lesson-meta">
             <span>1차 구현</span>
+            <span aria-hidden="true">→</span>
             <span>직접 사용</span>
+            <span aria-hidden="true">→</span>
             <span>2차 개선</span>
           </div>
         </div>
         <div className="lesson-intro-actions">
-          <a className="button outlined" href={slideHref("cover")}>
+          <a className="button primary" href={slideHref("cover")}>
             <Icon name="play" size={16} />
             발표용 웹 슬라이드
           </a>

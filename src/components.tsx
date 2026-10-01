@@ -105,13 +105,9 @@ export function Icon({
 export function Brand() {
   return (
     <a className="brand" href="#/" aria-label="KUCC 바이브코딩 스터디 홈">
-      <span className="brand-symbol" aria-hidden="true">
-        <span>k</span>
-      </span>
-      <span>
-        KUCC<span className="brand-divider">·</span>
-        <span className="brand-sub">바이브코딩 스터디</span>
-      </span>
+      <img className="brand-logo" src="/slides/kucc-logo.svg" alt="" />
+      <span className="brand-name">KUCC</span>
+      <span className="brand-sub">VIBE CODING STUDY</span>
     </a>
   );
 }
@@ -157,7 +153,7 @@ export function Header({ route }: { route: string }) {
           ))}
         </nav>
         <a href="#/week/1" className="header-cta">
-          1주차 시작하기 <Icon name="up-right" size={15} />
+          <span aria-hidden="true">&gt;</span> 1주차 시작하기
         </a>
         <button
           className="mobile-menu icon-button"
@@ -176,18 +172,20 @@ export function Header({ route }: { route: string }) {
 export function Footer() {
   return (
     <footer className="site-footer">
-      <div className="footer-top">
-        <Brand />
-        <span>작은 불편에서 시작하는, 우리의 첫 만들기.</span>
-      </div>
-      <div className="footer-bottom">
-        <span>KUCC VIBE CODING STUDY</span>
-        <div>
+      <div className="footer-inner">
+        <div className="footer-top">
+          <Brand />
+          <p>작은 불편에서 시작하는, 우리의 첫 만들기.</p>
+        </div>
+        <nav className="footer-links" aria-label="바로가기">
           <a href="#/curriculum">수업 자료</a>
           <a href="#/prompts">프롬프트 모음</a>
           <a href="#/guide">도움이 필요할 때</a>
+        </nav>
+        <div className="footer-bottom">
+          <span>// KUCC VIBE CODING STUDY</span>
+          <span>함께 만들어요. 천천히, 끝까지.</span>
         </div>
-        <span>함께 만들어요. 천천히, 끝까지.</span>
       </div>
     </footer>
   );
@@ -201,8 +199,34 @@ export function Eyebrow({
   light?: boolean;
 }) {
   return (
-    <div className={`eyebrow${light ? " light" : ""}`}>
-      <span className="tiny-square" />
+    <p className={`eyebrow${light ? " light" : ""}`}>
+      <span aria-hidden="true">// </span>
+      {children}
+    </p>
+  );
+}
+
+export function PageIntro({
+  eyebrow,
+  title,
+  description,
+  mark,
+  children,
+}: {
+  eyebrow: ReactNode;
+  title: ReactNode;
+  description: ReactNode;
+  mark: string;
+  children?: ReactNode;
+}) {
+  return (
+    <div className="page-intro">
+      <span className="page-mark" aria-hidden="true">
+        {mark}
+      </span>
+      <Eyebrow>{eyebrow}</Eyebrow>
+      <h1>{title}</h1>
+      <p className="page-description">{description}</p>
       {children}
     </div>
   );
@@ -400,6 +424,11 @@ export function PromptCard({
         )}
         <div className="code-panel">
           <div className="code-toolbar">
+            <span className="window-dots" aria-hidden="true">
+              <i />
+              <i />
+              <i />
+            </span>
             <span>CODEX에 입력</span>
             <CopyButton
               text={text}
@@ -423,7 +452,9 @@ export function PromptCard({
 export function QuickHelp() {
   return (
     <div className="help-note">
-      <span className="help-note-icon">?</span>
+      <span className="help-note-icon" aria-hidden="true">
+        ?
+      </span>
       <div>
         <strong>막혔다면, 지금 보이는 화면부터.</strong>
         <p>무엇을 했는지와 기대한 결과를 함께 알려주세요.</p>

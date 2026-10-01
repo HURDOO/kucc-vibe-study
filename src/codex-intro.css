@@ -10,7 +10,9 @@
 }
 .codex-intro-heading h3 {
   margin-top: 8px;
-  font-size: 1.6rem;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.75rem;
 }
 .codex-intro-lead {
   margin: 18px 0 24px;
@@ -170,7 +172,7 @@
   background: var(--brand);
 }
 .completion-candidates li:nth-child(2) .candidate-track > span {
-  background: #ffb285;
+  background: #e5645a;
 }
 .completion-candidates li:nth-child(3) .candidate-track > span {
   background: var(--stroke-strong);
@@ -202,7 +204,7 @@
   margin-top: 18px;
 }
 .codex-runtime .codex-columns > div + div {
-  border-left: 1px solid #ffba92;
+  border-left: 2px solid var(--brand-line);
   padding-left: 24px;
 }
 .codex-runtime .codex-columns span {
@@ -244,7 +246,7 @@
   color: var(--fg-muted);
 }
 .codex-boundary {
-  border: 2px solid #a9cfc2;
+  border: 2px solid var(--positive-line);
   border-radius: 12px;
   padding: 22px;
 }
@@ -267,7 +269,7 @@
   font-size: 0.8em;
 }
 .boundary-review {
-  border-color: #f7c4aa;
+  border-color: var(--brand-line);
   border-style: dashed;
 }
 .boundary-review > span {
@@ -353,7 +355,7 @@
   }
   .codex-runtime .codex-columns > div + div {
     border-left: 0;
-    border-top: 1px solid #ffba92;
+    border-top: 2px solid var(--brand-line);
     padding: 16px 0 0;
   }
   .codex-app-frame,

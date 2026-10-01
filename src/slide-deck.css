@@ -1,26 +1,4 @@
 /* claude.ai Artifact 슬라이드(1920×1080 캔버스)를 원본 규칙대로 표시 */
-@font-face {
-  font-family: "Black Han Sans";
-  src: url("/fonts/slides/BlackHanSans-Slides.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Noto Sans KR";
-  src: url("/fonts/slides/NotoSansKR-Slides.woff2") format("woff2");
-  font-weight: 400 800;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "JetBrains Mono";
-  src: url("/fonts/slides/JetBrainsMono-Slides.woff2") format("woff2");
-  font-weight: 100 800;
-  font-style: normal;
-  font-display: swap;
-}
-
 .slide-frame {
   flex: 1;
   min-width: 0;
