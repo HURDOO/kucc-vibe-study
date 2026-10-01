@@ -31,8 +31,8 @@ SEED의 역할 기반 색상과 컴포넌트 구조를 참고하되, 당근 로�
 
 ## 글자, 간격, 형태
 
-- [타이포그래피](https://seed-design.io/foundations/typography): 16px 본문을 중심으로 12/13/14/18/20/24/26/28/32/40px 계층을 사용하며 실제 크기는 rem으로 정의한다. 발표 슬라이드에는 별도 큰 스케일을 적용한다.
-- Pretendard 웹폰트를 자체 호스팅해 외부 폰트 서비스 없이 표시한다.
+- [타이포그래피](https://seed-design.io/foundations/typography): 16px 본문을 중심으로 12/13/14/18/20/24/26/28/32/40px 계층을 사용하며 실제 크기는 rem으로 정의한다. 발표 슬라이드는 claude.ai Artifact 덱의 1920×1080 디자인(KUCC 빨강, Black Han Sans·Noto Sans KR·JetBrains Mono)을 그대로 쓰고, 슬라이드 바깥의 이동·목차 화면에만 SEED 규칙을 적용한다.
+- Pretendard와 슬라이드 글꼴을 자체 호스팅해 외부 폰트 서비스 없이 표시한다.
 - [Radius](https://seed-design.io/foundations/radius): 컨트롤 8–12px, 카드 16px, 큰 영역 24px. 칩에만 pill 형태를 사용한다.
 - [Action Button](https://seed-design.io/components/action-button): 주요 액션, 보조 액션, 텍스트 링크의 강조 수준을 구분한다. hover, pressed, disabled, focus 상태를 갖춘다.
 - 입력란, 필터, 체크박스, 아코디언에 같은 색상·간격·모서리 규칙을 적용한다.

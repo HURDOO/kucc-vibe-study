@@ -57,19 +57,23 @@ node /Users/hurdoo/coding/production/bin/deployctl.mjs --json --compact plan kuc
 - `#/week/2`–`#/week/7`: 주제와 학습 목표 미리보기. 상세 교안은 준비 중임을 표시합니다.
 - `#/prompts`: 1주차 6개 + 공통 3개 프롬프트, 분류, 검색, 복사
 - `#/guide`: 수업 준비물, Windows/Mac 안내, 자주 묻는 질문
-- `#/slides/1/1`: 1주차 발표용 웹 슬라이드 38장. 방향키, Space, Home/End, O(목차), Esc(실습으로) 지원
-- `#/slides/1/16`: Codex 소개 10장 시작. 문장·코드 생성, 도구 호출, 에이전트 루프, Sandbox·프로젝트·승인 설명
+- `#/slides/1/1`: 1주차 발표용 웹 슬라이드 45장. claude.ai Artifact 덱 "KUCC 바이브코딩 스터디 1주차"를 그대로 옮겼습니다. 슬라이드는 창에 꽉 차게 표시되고, 위아래 조작 막대는 마우스를 움직이거나 화면을 누르면 나타났다가 2.5초 뒤 사라집니다. 방향키, Space, Home/End, O(목차), F(전체 화면), Esc(실습으로) 지원
+- `#/slides/1/19`: "Codex는 어떻게 동작할까?" 시작. LLM, 도구, 에이전트 루프, 샌드박스·프로젝트·승인 모드 설명
 - `#/week/1?section=codex`: Codex 소개 해설과 예시로 바로 이동
 
 ## 자료 수정
 
 - `src/content.ts`: 주차 정보와 공통 프롬프트
-- `src/week-one.ts`: 1주차 프롬프트, 체크리스트, 브리프 해설, 개선 후보, Ctrl+Z 예시, 모델 표, 슬라이드
+- `src/week-one.ts`: 1주차 프롬프트, 체크리스트, 브리프 해설, 개선 후보, Ctrl+Z 예시, 모델 표
 - `src/WeekOne.tsx`: 1주차 실습 페이지와 수업 진행 순서
-- `src/codex-intro.ts`: Codex 소개의 슬라이드 문구, 발표 해설, 예시 코드와 공식 출처
-- `src/CodexIntro.tsx`, `src/CodexVisual.tsx`, `src/codex-intro.css`: 실습 페이지 해설과 슬라이드가 공유하는 시각 예시
+- `src/codex-intro.ts`: 실습 페이지의 Codex 소개 문구, 해설, 예시 코드와 공식 출처
+- `src/CodexIntro.tsx`, `src/CodexVisual.tsx`, `src/codex-intro.css`: 실습 페이지의 Codex 해설과 시각 예시
+- `src/slides/week1/*.html`: 발표 슬라이드 원문. Artifact 덱의 `project/slides/<id>.html`과 같은 형식(1920×1080, 인라인 스타일, `<aside>` 발표자 노트)이며 로고 주소만 `/slides/kucc-logo.svg`로 바꿨습니다
+- `src/week-one-slides.ts`: 슬라이드 순서, 목차 제목 추출, `<x-icon>` 아이콘 변환, 슬라이드 주소 생성
+- `src/slide-deck.css`: Artifact 슬라이드 형식의 기본 규칙(기본 글자 크기, 세로 flex, 최소 너비 0, 칠하기 순서, 목록 들여쓰기). Artifact에서 내보낸 PDF와 45장을 비교해 맞췄습니다
+- `src/slide-icons.ts`: `<x-icon>` 이름에 가장 가까운 [Lucide](https://lucide.dev) 아이콘(ISC). Artifact 전용 아이콘 글꼴은 쓸 수 없어 모양이 조금 다릅니다
 - `src/materials/PROJECT_BRIEF.txt`, `src/materials/IMPROVEMENTS_BRIEF.txt`: 실습 레포의 브리프 원문
-- `src/App.tsx`: 페이지 구성과 발표 화면
+- `src/App.tsx`: 페이지 구성과 발표 화면(1920×1080 캔버스를 화면에 맞춰 축소)
 - `src/components.tsx`: 공통 UI, 복사, 레포 URL 검증, 체크리스트 저장
 - `src/styles.css`: 색상, 타이포그래피, 반응형 화면
 - `DESIGN.md`: `seed-design` 레퍼런스와 적용 원칙
@@ -90,15 +94,19 @@ VITE_WEEK1_REPO_URL=https://github.com/ACCOUNT/REPOSITORY
 
 `VITE_` 환경 변수는 브라우저에 공개됩니다. 비밀키나 토큰을 넣지 마세요. 입력한 URL은 이 브라우저에 저장되어 기본값보다 우선합니다.
 
-두 브리프는 2026-09-27에 실습 레포 `main`에서 가져왔습니다. 사이트에서 실시간으로 GitHub를 호출하지 않습니다. 실습 레포의 양식을 수정하면 `src/materials/`의 원문도 갱신하세요. 해설과 슬라이드의 인용 부분은 이 원문에서 추출합니다. 이전의 축약된 `.md` 브리프는 `.txt` 원문으로 교체했습니다.
+두 브리프는 2026-09-27에 실습 레포 `main`에서 가져왔습니다. 사이트에서 실시간으로 GitHub를 호출하지 않습니다. 실습 레포의 양식을 수정하면 `src/materials/`의 원문도 갱신하세요. 실습 페이지 해설의 인용 부분은 이 원문에서 추출합니다. 발표 슬라이드의 브리프 내용은 Artifact 덱에 따로 들어 있으므로 함께 맞춰주세요. 이전의 축약된 `.md` 브리프는 `.txt` 원문으로 교체했습니다.
 
 ## 발표 자료의 사실 확인
 
-Codex 설명은 [도구 호출](https://developers.openai.com/api/docs/guides/function-calling), [에이전트 구조](https://developers.openai.com/api/docs/guides/agents-api/architecture), [Sandbox](https://learn.chatgpt.com/docs/sandboxing), [프로젝트](https://learn.chatgpt.com/docs/projects), [자동 승인 검토](https://learn.chatgpt.com/docs/sandboxing/auto-review) 공식 문서를 참고했습니다. 모델 표는 [OpenAI 모델 안내](https://developers.openai.com/api/docs/models)와 [Claude Opus 5.5 발표](https://www.anthropic.com/claude-opus-5-5)를 참고했습니다. 확인일은 2026-09-27이며 관련 화면에도 출처를 표시합니다.
+실습 페이지의 Codex 설명은 [도구 호출](https://developers.openai.com/api/docs/guides/function-calling), [에이전트 구조](https://developers.openai.com/api/docs/guides/agents-api/architecture), [Sandbox](https://learn.chatgpt.com/docs/sandboxing), [프로젝트](https://learn.chatgpt.com/docs/projects), [자동 승인 검토](https://learn.chatgpt.com/docs/sandboxing/auto-review) 공식 문서를 참고했습니다. 모델 표는 [OpenAI 모델 안내](https://developers.openai.com/api/docs/models)와 [Claude Opus 5.5 발표](https://www.anthropic.com/claude-opus-5-5)를 참고했습니다. 확인일은 2026-09-27이며 관련 화면에도 출처를 표시합니다.
 
 Codex 소개의 날씨 확률은 가상 수치이고, `tool: 파일 쓰기` 같은 형식은 이해를 돕기 위한 의사 코드입니다. 허용된 프로젝트 수정은 실제 컴퓨터에 반영되며, 프로젝트 밖의 읽기까지 일괄 차단된다고 설명하지 않습니다. 승인 요청 모드에서도 허용된 작업은 매번 묻지 않고, 자동 검토는 추가 승인이 필요한 작업을 별도 검토 에이전트에 맡기는 기능입니다. 업로드 차단은 승인 검토에 들어온 상황의 예로 표시하며, 요약된 맥락과 검토 대상·정책에 따라 판단이 달라질 수 있음을 설명합니다.
 
 모델별 역할 분담은 수업용 예시입니다. Opus·Luna·Astra를 함께 쓰는 구성에는 도구별 연결 설정이 필요하며, 오늘 실습은 Sol로 진행합니다. 이용자의 서비스 이동이나 AI와 취업률 사이의 인과관계는 검증된 통계로 제시하지 않습니다. 이 부분은 커뮤니티 사례 읽기와 전공 지식 활용에 관한 토론으로 구성했습니다. 모델 출시 시점과 선택지는 발표 전에 공식 자료와 앱에서 다시 확인하세요.
+
+발표 슬라이드는 Artifact 덱의 문구를 그대로 옮겼으며, 위 기준으로 다시 검토하거나 고치지 않았습니다. 예를 들어 승인 모드 슬라이드는 "명령어를 실행할 때마다 확인"으로 단순화해 실습 페이지 설명과 다릅니다. 스터디장 소개 슬라이드의 `[이름]`은 자리 표시자입니다.
+
+슬라이드를 바꿀 때는 Artifact 덱을 수정한 뒤 해당 `project/slides/<id>.html`을 `src/slides/week1/`에 다시 복사하고, 순서가 바뀌면 `src/week-one-slides.ts`의 `slideOrder`도 맞춥니다. 슬라이드 글꼴은 사용 글자와 KS X 1001 한글 2,350자로 줄인 파일이므로, 그 밖의 글자는 대체 글꼴로 표시될 수 있습니다.
 
 ## 저장과 접근성
 
@@ -110,7 +118,7 @@ Codex 소개의 날씨 확률은 가상 수치이고, `tool: 파일 쓰기` 같�
 
 현재 디자인 레퍼런스는 **`seed-design`**([당근 SEED Design](https://seed-design.io/))입니다. 공식 팔레트, 역할 기반 색상, 타이포그래피, 둥근 컴포넌트와 액션 계층을 참고했습니다. 홈은 실습·슬라이드·프롬프트에 바로 접근하는 학습 홈으로 구성했습니다. 구체적인 토큰과 적용 원칙은 [DESIGN.md](./DESIGN.md)에 있습니다.
 
-SEED 패키지 의존성 없이 기존 React와 CSS로 구현했습니다. 당근 로고는 사용하지 않으며 공식 SEED 제품이 아닙니다. Pretendard를 자체 호스팅하고 폰트 라이선스는 `public/fonts/OFL.txt`에 있습니다.
+SEED 패키지 의존성 없이 기존 React와 CSS로 구현했습니다. 당근 로고는 사용하지 않으며 공식 SEED 제품이 아닙니다. Pretendard를 자체 호스팅하고 폰트 라이선스는 `public/fonts/OFL.txt`에 있습니다. 발표 슬라이드는 Artifact 덱의 디자인(KUCC 빨강, Black Han Sans·Noto Sans KR·JetBrains Mono)을 그대로 사용합니다. 세 글꼴은 Google Fonts 저장소의 OFL 원본을 서브셋해 `public/fonts/slides/`에 자체 호스팅하며 라이선스도 같은 폴더에 있습니다.
 
 이전 GDGoC 레퍼런스 버전은 로컬 커밋 `02932c9`에 보존했습니다. 현재 1주차 교안은 새 진행 계획에 맞춰 갱신했습니다.
 

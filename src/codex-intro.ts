@@ -1,3 +1,5 @@
+import type { SlideId } from "./week-one-slides";
+
 export type CodexVisualKind =
   | "completion"
   | "code"
@@ -54,6 +56,7 @@ content:
 
 type CodexTopic = {
   id: string;
+  slide: SlideId;
   title: string;
   body: string;
   note: string;
@@ -65,6 +68,7 @@ type CodexTopic = {
 export const codexTopics: CodexTopic[] = [
   {
     id: "llm-tools",
+    slide: "llm",
     title: "LLM은 다음 내용을 생성합니다",
     body: "앞의 문맥을 바탕으로 다음에 이어질 텍스트를 예측하고, 조금씩 이어 붙입니다.",
     visual: "completion",
@@ -77,6 +81,7 @@ export const codexTopics: CodexTopic[] = [
   },
   {
     id: "llm-code",
+    slide: "llm-code",
     title: "코드도 이어서 쓸 수 있어요",
     body: "우리가 원하는 동작과 앞의 코드를 문맥으로 주면, 그에 맞는 코드를 생성합니다.",
     visual: "code",
@@ -89,6 +94,7 @@ export const codexTopics: CodexTopic[] = [
   },
   {
     id: "tool-call",
+    slide: "tool",
     title: "출력을 실제 동작에 연결하기",
     body: "모델이 도구 이름과 입력값을 보내면, 실행 프로그램이 그 요청을 받아 처리합니다.",
     visual: "tool-call",
@@ -101,6 +107,7 @@ export const codexTopics: CodexTopic[] = [
   },
   {
     id: "codex-relationship",
+    slide: "gpt-codex",
     title: "GPT, Codex, ChatGPT 앱",
     body: "GPT가 다음 작업을 판단하면, Codex가 도구 실행과 결과 전달을 이어줍니다.",
     visual: "relationship",
@@ -113,6 +120,7 @@ export const codexTopics: CodexTopic[] = [
   },
   {
     id: "read-edit",
+    slide: "loop",
     title: "읽고, 결과를 받고, 수정하기",
     body: "“Hello World를 Hello KUCC로 바꿔줘”라는 요청이 실제 파일 수정으로 이어지는 과정입니다.",
     visual: "read-edit",
@@ -125,6 +133,7 @@ export const codexTopics: CodexTopic[] = [
   },
   {
     id: "agent-loop",
+    slide: "loop",
     title: "이 반복이 Agent loop입니다",
     body: "모델의 판단, 도구 실행, 결과 확인을 반복하며 요청한 작업을 진행합니다.",
     visual: "loop",
@@ -137,6 +146,7 @@ export const codexTopics: CodexTopic[] = [
   },
   {
     id: "sandbox",
+    slide: "sandbox",
     title: "Sandbox가 작업 범위를 제한합니다",
     body: "로컬 명령이 어떤 파일을 바꾸고 네트워크에 접근할 수 있는지 경계를 정합니다.",
     visual: "sandbox",
@@ -149,6 +159,7 @@ export const codexTopics: CodexTopic[] = [
   },
   {
     id: "codex-project",
+    slide: "project-scope",
     title: "프로젝트는 작업할 폴더를 연결해요",
     body: "오늘 연 kucc-vibe-study-week1 폴더가 브리프와 코드를 읽고 수정하는 작업의 기준입니다.",
     visual: "project",
@@ -161,6 +172,7 @@ export const codexTopics: CodexTopic[] = [
   },
   {
     id: "codex-approvals",
+    slide: "approval",
     title: "승인이 필요할 때, 누가 검토할까?",
     body: "‘승인 요청’과 ‘나 대신 승인’은 승인이 필요한 작업을 검토하는 주체가 다릅니다.",
     visual: "approvals",
@@ -173,6 +185,7 @@ export const codexTopics: CodexTopic[] = [
   },
   {
     id: "codex-review",
+    slide: "approval",
     title: "요청한 범위까지 함께 확인해요",
     body: "예를 들어, 로컬 구현만 요청했는데 외부 업로드를 시도해 승인 검토에 들어왔다면?",
     visual: "review",

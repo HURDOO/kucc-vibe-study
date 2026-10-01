@@ -1,0 +1,128 @@
+/* claude.ai Artifact 슬라이드(1920×1080 캔버스)를 원본 규칙대로 표시 */
+@font-face {
+  font-family: "Black Han Sans";
+  src: url("/fonts/slides/BlackHanSans-Slides.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Noto Sans KR";
+  src: url("/fonts/slides/NotoSansKR-Slides.woff2") format("woff2");
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/slides/JetBrainsMono-Slides.woff2") format("woff2");
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+.slide-frame {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.slide-canvas {
+  position: relative;
+  overflow: hidden;
+  background: #fbfaf8;
+}
+
+.deck-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  transform-origin: 0 0;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #16181d;
+  font-synthesis: initial;
+  word-break: normal;
+  overflow-wrap: break-word;
+  animation: deck-fade 0.3s ease;
+}
+.deck-slide section {
+  position: relative;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+/* 본문은 첫 본문 요소 자리에서 한 층으로 칠하고, 고정 요소는 소스 순서대로 칠한다 */
+.deck-slide section > :not([style*="position:absolute"]) {
+  position: relative;
+  z-index: 1;
+}
+.deck-slide
+  section
+  > :not([style*="position:absolute"]):not(aside)
+  ~ [style*="position:absolute"] {
+  z-index: 2;
+}
+.deck-slide div {
+  display: flex;
+  flex-direction: column;
+}
+/* 글자 폭에 따른 최소 너비는 min-width를 직접 지정했을 때만 적용된다 */
+.deck-slide section * {
+  min-width: 0;
+}
+.deck-slide h1,
+.deck-slide h2,
+.deck-slide h3,
+.deck-slide p,
+.deck-slide ul {
+  margin: 0;
+}
+.deck-slide h1 {
+  font-size: 96px;
+  font-weight: 600;
+  line-height: 1.1;
+}
+.deck-slide h2 {
+  font-size: 64px;
+  font-weight: 600;
+  line-height: 1.15;
+}
+.deck-slide h3 {
+  font-size: 44px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.deck-slide ul {
+  padding: 0 0 0 1.2em;
+  list-style: disc outside;
+}
+.deck-slide img {
+  display: block;
+}
+.deck-slide x-icon {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+}
+.deck-slide x-icon svg {
+  width: 85%;
+  height: 85%;
+}
+.deck-slide aside {
+  display: none;
+}
+
+@keyframes deck-fade {
+  from {
+    opacity: 0;
+  }
+}

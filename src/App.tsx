@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
-import { prompts, slides, weeks, type Week } from "./content";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { prompts, weeks, type Week } from "./content";
 import WeekOne from "./WeekOne";
-import CodexVisual from "./CodexVisual";
+import { slides } from "./week-one-slides";
+import "./slide-deck.css";
 import {
   Eyebrow,
   Footer,
@@ -565,9 +566,73 @@ function Guide() {
   );
 }
 
+function SlideCanvas({ html, index }: { html: string; index: number }) {
+  const frame = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(0);
+  useLayoutEffect(() => {
+    const element = frame.current;
+    if (!element) return;
+    const update = () =>
+      setScale(
+        Math.min(element.clientWidth / 1920, element.clientHeight / 1080),
+      );
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+  return (
+    <div className="slide-frame" ref={frame}>
+      <div
+        className="slide-canvas"
+        style={{ width: 1920 * scale, height: 1080 * scale }}
+      >
+        <div
+          key={index}
+          className="deck-slide"
+          style={{ transform: `scale(${scale})` }}
+          dangerouslySetInnerHTML={{ __html: html }}
+        />
+      </div>
+    </div>
+  );
+}
+
+function useIdle(delay: number) {
+  const [idle, setIdle] = useState(false);
+  useEffect(() => {
+    let timer = window.setTimeout(() => setIdle(true), delay);
+    const wake = () => {
+      setIdle(false);
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => setIdle(true), delay);
+    };
+    window.addEventListener("pointermove", wake);
+    window.addEventListener("pointerdown", wake);
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener("pointermove", wake);
+      window.removeEventListener("pointerdown", wake);
+    };
+  }, [delay]);
+  return idle;
+}
+
+function toggleFullscreen() {
+  if (document.fullscreenElement) document.exitFullscreen();
+  else document.documentElement.requestFullscreen().catch(() => {});
+}
+
 function SlideDeck({ index }: { index: number }) {
   const [overview, setOverview] = useState(false);
+  const [fullscreen, setFullscreen] = useState(!!document.fullscreenElement);
+  const idle = useIdle(2500);
   const slide = slides[index];
+  useEffect(() => {
+    const update = () => setFullscreen(!!document.fullscreenElement);
+    document.addEventListener("fullscreenchange", update);
+    return () => document.removeEventListener("fullscreenchange", update);
+  }, []);
   const go = (next: number) => {
     window.location.hash = `/slides/1/${Math.max(1, Math.min(slides.length, next + 1))}`;
     setOverview(false);
@@ -602,6 +667,8 @@ function SlideDeck({ index }: { index: number }) {
         go(slides.length - 1);
       }
       if (event.key.toLowerCase() === "o") setOverview((value) => !value);
+      if (event.key.toLowerCase() === "f" && document.fullscreenEnabled)
+        toggleFullscreen();
       if (event.key === "Escape") {
         if (overview) setOverview(false);
         else window.location.hash = "/week/1";
@@ -611,7 +678,7 @@ function SlideDeck({ index }: { index: number }) {
     return () => window.removeEventListener("keydown", key);
   }, [index, overview]);
   return (
-    <div className={`slide-deck slide-${slide.type}`}>
+    <div className={`slide-deck${idle && !overview ? " idle" : ""}`}>
       <header className="slide-header">
         <a href="#/week/1" className="slide-back">
           ← 1주차 실습으로
@@ -619,14 +686,25 @@ function SlideDeck({ index }: { index: number }) {
         <span>
           KUCC <span>/</span> VIBE CODING
         </span>
-        <button
-          className="icon-button"
-          onClick={() => setOverview(!overview)}
-          aria-label={overview ? "슬라이드 목차 닫기" : "슬라이드 목차 열기"}
-          aria-expanded={overview}
-        >
-          <Icon name={overview ? "close" : "grid"} />
-        </button>
+        <div className="slide-header-actions">
+          {document.fullscreenEnabled && (
+            <button
+              className="icon-button"
+              onClick={toggleFullscreen}
+              aria-label={fullscreen ? "전체 화면 끝내기" : "전체 화면"}
+            >
+              <Icon name={fullscreen ? "shrink" : "expand"} />
+            </button>
+          )}
+          <button
+            className="icon-button"
+            onClick={() => setOverview(!overview)}
+            aria-label={overview ? "슬라이드 목차 닫기" : "슬라이드 목차 열기"}
+            aria-expanded={overview}
+          >
+            <Icon name={overview ? "close" : "grid"} />
+          </button>
+        </div>
       </header>
       <main id="main-content" tabIndex={-1} className="slide-stage">
         {overview ? (
@@ -640,76 +718,19 @@ function SlideDeck({ index }: { index: number }) {
                   onClick={() => go(i)}
                 >
                   <span>{String(i + 1).padStart(2, "0")}</span>
-                  <strong>{item.title.replace("\n", " ")}</strong>
+                  <strong>{item.title}</strong>
                 </button>
               ))}
             </div>
           </div>
         ) : (
-          <article className="slide-content" key={index}>
-            <Eyebrow>{slide.eyebrow}</Eyebrow>
-            <h1>
-              {slide.title.split("\n").map((line, i) => (
-                <span key={i}>{line}</span>
-              ))}
-            </h1>
-            <p className="slide-body">{slide.body}</p>
-            {slide.visual && <CodexVisual kind={slide.visual} />}
-            {slide.items && (
-              <ul className="slide-list">
-                {slide.items.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            )}
-            {slide.excerpt && (
-              <pre className="slide-excerpt">{slide.excerpt}</pre>
-            )}
-            {slide.table && (
-              <div className="model-table-wrap">
-                <table className="model-table">
-                  <thead>
-                    <tr>
-                      {slide.table[0].map((cell) => (
-                        <th key={cell} scope="col">
-                          {cell}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {slide.table.slice(1).map((row) => (
-                      <tr key={row[0]}>
-                        {row.map((cell, i) => (
-                          <td key={i}>{cell}</td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-            <p className="slide-note">{slide.note}</p>
-            {slide.links && (
-              <div className="source-links">
-                {slide.links.map((link) => (
-                  <a key={link.href} href={link.href}>
-                    {link.label} <Icon name="up-right" size={14} />
-                  </a>
-                ))}
-              </div>
-            )}
-            {slide.type === "cover" && (
-              <span className="slide-decoration" aria-hidden="true">
-                ↗
-              </span>
-            )}
-          </article>
+          <SlideCanvas html={slide.html} index={index} />
         )}
       </main>
       <footer className="slide-controls">
         <span className="slide-keyboard">
-          ← → 이동 <span>·</span> O 목차 <span>·</span> Esc 실습으로
+          ← → 이동 <span>·</span> O 목차 <span>·</span> F 전체 화면{" "}
+          <span>·</span> Esc 실습으로
         </span>
         <button
           className="slide-index-button"

@@ -149,4 +149,3 @@ export const prompts: Prompt[] = [
   },
 ];
 
-export { slides } from "./week-one";

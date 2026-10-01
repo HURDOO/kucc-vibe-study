@@ -16,13 +16,13 @@ import {
   improvementIdeas,
   improvementsBrief,
   modelRows,
-  slideHref,
   sources,
   undoBadExample,
   undoGoodExample,
   weekOnePrompts,
   weekOneRepository,
 } from "./week-one";
+import { slideHref } from "./week-one-slides";
 import briefUrl from "./materials/PROJECT_BRIEF.txt?url&no-inline";
 import improvementsUrl from "./materials/IMPROVEMENTS_BRIEF.txt?url&no-inline";
 
@@ -175,7 +175,7 @@ export default function WeekOne() {
           </div>
         </div>
         <div className="lesson-intro-actions">
-          <a className="button outlined" href={slideHref("welcome")}>
+          <a className="button outlined" href={slideHref("cover")}>
             <Icon name="play" size={16} />
             발표용 웹 슬라이드
           </a>
@@ -296,7 +296,7 @@ export default function WeekOne() {
               </p>
             </div>
             <div className="brief-reading">
-              {briefSections.map((part, i) => (
+              {briefSections.map((part) => (
                 <details className="faq-item" key={part.title}>
                   <summary>
                     {part.title}
@@ -304,7 +304,7 @@ export default function WeekOne() {
                   </summary>
                   <p>{part.explanation}</p>
                   <pre>{part.excerpt}</pre>
-                  <a className="text-link" href={slideHref(`brief-${i + 1}`)}>
+                  <a className="text-link" href={slideHref(part.slide)}>
                     이 부분 슬라이드로 보기 <Icon name="up-right" size={14} />
                   </a>
                 </details>

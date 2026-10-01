@@ -1,6 +1,6 @@
 import { codexTopics } from "./codex-intro";
 import CodexVisual from "./CodexVisual";
-import { slideHref } from "./week-one";
+import { slideHref } from "./week-one-slides";
 import { Icon } from "./components";
 
 export default function CodexIntro() {
@@ -11,7 +11,7 @@ export default function CodexIntro() {
           <span className="small-label">구현을 기다리며</span>
           <h3>Codex가 무엇인가</h3>
         </div>
-        <a className="text-link" href={slideHref("llm-tools")}>
+        <a className="text-link" href={slideHref("div-codex")}>
           설명 슬라이드 <Icon name="play" size={15} />
         </a>
       </div>
@@ -38,7 +38,7 @@ export default function CodexIntro() {
               ))}
             </div>
             <div className="source-links">
-              <a href={slideHref(topic.id)}>이 부분 슬라이드로 보기</a>
+              <a href={slideHref(topic.slide)}>이 부분 슬라이드로 보기</a>
               {topic.links.map((link) => (
                 <a
                   key={link.href}

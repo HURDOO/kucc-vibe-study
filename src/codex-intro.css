@@ -316,12 +316,6 @@
 .codex-topic .codex-loop {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
-.slide-content .codex-visual {
-  font-size: clamp(1rem, 1.65vw, 1.3rem);
-}
-.slide-content .codex-three-columns {
-  font-size: clamp(0.9375rem, 1.35vw, 1.125rem);
-}
 .approval-table {
   font-size: 1em;
 }
@@ -337,22 +331,6 @@
   font-weight: 500;
 }
 
-@media (min-width: 761px) and (max-height: 900px) {
-  .slide-content .codex-visual {
-    font-size: 1.125rem;
-    margin-top: 22px;
-  }
-  .slide-content .codex-three-columns {
-    font-size: 1rem;
-  }
-  .slide-content .codex-visual pre {
-    line-height: 1.65;
-  }
-  .slide-content .codex-app-frame,
-  .slide-content .codex-runtime {
-    padding: 18px;
-  }
-}
 @media (max-width: 760px) {
   .codex-intro-heading {
     align-items: start;
