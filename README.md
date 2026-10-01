@@ -55,7 +55,7 @@ node /Users/hurdoo/coding/production/bin/deployctl.mjs --json --compact plan kuc
 - `#/curriculum`: 전체 커리큘럼
 - `#/week/1`: 복제부터 2차 개선까지 안내, 두 브리프 복사·다운로드, 기본 기능 체크리스트
 - `#/week/2`–`#/week/7`: 주제와 학습 목표 미리보기. 상세 교안은 준비 중임을 표시합니다.
-- `#/prompts`: 1주차 6개 + 공통 3개 프롬프트, 분류, 검색, 복사
+- `#/prompts`: 1주차 4개(발표 슬라이드와 같은 문구) + 공통 3개 프롬프트, 분류, 검색, 복사
 - `#/guide`: 수업 준비물, Windows/Mac 안내, 자주 묻는 질문
 - `#/slides/1/1`: 1주차 발표용 웹 슬라이드 45장. claude.ai Artifact 덱 "KUCC 바이브코딩 스터디 1주차"를 그대로 옮겼습니다. 슬라이드는 창에 꽉 차게 표시되고, 위아래 조작 막대는 마우스를 움직이거나 화면을 누르면 나타났다가 2.5초 뒤 사라집니다. 방향키, Space, Home/End, O(목차), F(전체 화면), Esc(실습으로) 지원
 - `#/slides/1/19`: "Codex는 어떻게 동작할까?" 시작. LLM, 도구, 에이전트 루프, 샌드박스·프로젝트·승인 모드 설명
@@ -64,7 +64,7 @@ node /Users/hurdoo/coding/production/bin/deployctl.mjs --json --compact plan kuc
 ## 자료 수정
 
 - `src/content.ts`: 주차 정보와 공통 프롬프트
-- `src/week-one.ts`: 1주차 프롬프트, 체크리스트, 브리프 해설, 개선 후보, Ctrl+Z 예시, 모델 표
+- `src/week-one.ts`: 1주차 프롬프트(슬라이드를 바꾸면 같은 문구로 맞춤), 체크리스트, 브리프 해설, 개선 후보, Ctrl+Z 예시, 모델 표
 - `src/WeekOne.tsx`: 1주차 실습 페이지와 수업 진행 순서
 - `src/codex-intro.ts`: 실습 페이지의 Codex 소개 문구, 해설, 예시 코드와 공식 출처
 - `src/CodexIntro.tsx`, `src/CodexVisual.tsx`, `src/codex-intro.css`: 실습 페이지의 Codex 해설과 시각 예시

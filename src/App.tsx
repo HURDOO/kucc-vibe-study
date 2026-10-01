@@ -148,43 +148,6 @@ function Home() {
           채워집니다.
         </p>
       </section>
-      <section className="container home-section">
-        <div className="section-heading">
-          <div>
-            <Eyebrow>HOW WE STUDY</Eyebrow>
-            <h2>우리 스터디는 이렇게 진행해요</h2>
-            <p>처음부터 다 알 필요는 없어요. 하나씩 해보면 돼요.</p>
-          </div>
-        </div>
-        <div className="way-grid">
-          {[
-            {
-              title: "복사해서 바로 시작하기",
-              text: "처음부터 잘 요청할 필요는 없어요. 준비된 프롬프트로 첫 도구를 만듭니다.",
-            },
-            {
-              title: "써보고 내 말로 수정하기",
-              text: "버튼 하나부터 기능 하나까지. 직접 써보며 필요한 것을 바꿔봅니다.",
-            },
-            {
-              title: "개선 브리프로 다시 구현",
-              text: "사용해본 경험을 브리프에 적어요. 필요한 기능을 골라 한 번 더 구현해요.",
-            },
-          ].map((item, i) => (
-            <article key={item.title}>
-              <span className="way-number">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <h3>{item.title}</h3>
-              <p>{item.text}</p>
-            </article>
-          ))}
-        </div>
-        <p className="loop-strip">
-          <span aria-hidden="true">↺</span> 다시 01로 — 원하는 만큼 반복하면
-          계속 좋아져요
-        </p>
-      </section>
       <div className="container home-help">
         <QuickHelp />
       </div>

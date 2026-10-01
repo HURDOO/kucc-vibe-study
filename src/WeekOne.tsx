@@ -136,7 +136,6 @@ export default function WeekOne() {
     "improvements-saved",
     "improved",
     "regression",
-    "restarted",
   ];
   const done = completionIds.filter((id) => checked.includes(id)).length;
   const check = (id: string, children: ReactNode) => (
@@ -376,7 +375,14 @@ export default function WeekOne() {
             title="내 IMPROVEMENTS_BRIEF 작성하기"
             description="실제로 불편했던 점을 기록하고, 이번에 바꿀 기능을 정해요. 여러 개를 선택해도 괜찮습니다."
           >
-            <PromptCard prompt={weekOnePrompts[3]} />
+            <div className="setup-strip">
+              <span>어디서 쓰나요?</span>
+              <p>
+                ChatGPT 사이드 패널의 ‘파일’ 탭에서{" "}
+                <strong>IMPROVEMENTS_BRIEF.txt</strong>를 열어 작성해요. 안 되면
+                메모장으로 열어도 괜찮아요.
+              </p>
+            </div>
             <div className="improvement-grid">
               {improvementIdeas.map((idea) => (
                 <article key={idea.title}>
@@ -436,7 +442,7 @@ export default function WeekOne() {
             title="Sol에게 2차 구현 맡기기"
             description="저장한 개선 브리프를 바탕으로 다시 구현합니다. 기다리면서 모델과 전공 지식 이야기를 나눠요."
           >
-            <PromptCard prompt={weekOnePrompts[4]} />
+            <PromptCard prompt={weekOnePrompts[3]} />
             <ModelTable />
             <p className="small-note">
               역할은 수업용 예시입니다.{" "}
@@ -501,11 +507,6 @@ export default function WeekOne() {
             >
               기본 기능 체크리스트로 돌아가기 <Icon name="arrow" size={15} />
             </button>
-            <PromptCard prompt={weekOnePrompts[5]} defaultOpen={false} />
-            {check(
-              "restarted",
-              "도구를 종료했다가 다음에도 다시 실행할 수 있어요.",
-            )}
             <div className="finish-note">
               <Icon name="check" size={22} />
               <div>

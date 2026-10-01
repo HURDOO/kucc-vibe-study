@@ -6,59 +6,43 @@ import type { SlideId } from "./week-one-slides";
 export { brief, improvementsBrief };
 export const weekOneRepository =
   "https://github.com/HURDOO/kucc-vibe-study-week1.git";
+// 1주차 발표 슬라이드(clone, open, impl1, impl2)의 프롬프트 문구 그대로
 export const weekOnePrompts: Prompt[] = [
   {
     id: "1-1",
-    title: "실습 레포를 바탕화면에 가져오기",
+    title: "프로젝트 받아오기",
     category: "week1",
-    when: "처음 시작할 때 · 첫 번째 프롬프트",
+    when: "STEP 1 · 첫 번째 프롬프트",
     clone: true,
-    text: "[실습 레포 주소]를 내 컴퓨터의 실제 바탕화면 위치에 git clone해줘.\n폴더 이름은 kucc-vibe-study-week1로 해줘.\n\n같은 이름의 폴더가 이미 있으면 덮어쓰지 말고 알려줘.\n완료하면 폴더의 전체 경로를 알려줘. 아직 구현은 시작하지 마.",
+    text: "[실습 레포 주소] 를\n바탕화면에 git clone 해줘.",
     check:
-      "복제가 끝나면 바탕화면의 kucc-vibe-study-week1 폴더를 프로젝트로 열어요.",
+      "붙여넣기 전에 Codex, ‘나 대신 승인’, GPT 6.1 Sol · Extra High 설정을 확인하고, 승인 요청이 뜨면 허락해요.",
   },
   {
     id: "1-2",
     title: "PROJECT_BRIEF 파일 열기",
     category: "week1",
-    when: "복제한 폴더를 프로젝트로 연 다음",
-    text: "이 프로젝트의 PROJECT_BRIEF.txt 파일을 열어줘.\n파일을 읽을 수 있게 보여주고, 아직 구현은 시작하지 마.",
-    check: "사이드 패널의 ‘파일’에서 PROJECT_BRIEF.txt를 열고 함께 읽어요.",
+    when: "STEP 2 · 받아온 폴더를 프로젝트로 연 다음",
+    text: "PROJECT_BRIEF 파일 열어줘",
+    check: "오른쪽 사이드 패널의 ‘파일’에서 PROJECT_BRIEF.txt를 띄워 둬요.",
   },
   {
     id: "1-3",
-    title: "Sol에게 1차 구현 요청하기",
+    title: "1차 구현 맡기기",
     category: "week1",
-    when: "PROJECT_BRIEF 설명을 함께 읽은 다음 · Sol 선택",
-    text: "PROJECT_BRIEF.txt 기반으로 구현해줘.\n필요한 설치와 실행, 동작 확인까지 진행해줘.\n완료하면 내가 도구를 열어 사용하는 방법을 알려줘.",
+    when: "STEP 3 · PROJECT_BRIEF를 함께 읽은 다음",
+    text: "PROJECT_BRIEF 기반으로 구현해줘",
     check:
-      "작업이 시작되면 Codex 설명을 듣고, 구현이 끝나면 기본 기능을 확인해요.",
+      "모델은 GPT 6.1 Sol, 추론 수준은 Extra High. 중간에 승인을 요청하면 내용을 읽고 허락해요.",
   },
   {
     id: "1-4",
-    title: "IMPROVEMENTS_BRIEF 파일 열기",
+    title: "2차 구현 맡기기",
     category: "week1",
-    when: "1차 결과물을 써보고, 개선할 내용을 기록할 때",
-    text: "이 프로젝트의 IMPROVEMENTS_BRIEF.txt 파일을 열어줘.\n내가 개선 내용을 적을 수 있게 보여주고, 아직 구현은 시작하지 마.",
+    when: "STEP 6 · IMPROVEMENTS_BRIEF.txt를 작성하고 저장한 다음",
+    text: "IMPROVEMENTS_BRIEF 기반으로 구현해줘",
     check:
-      "파일에서 직접 편집하기 어렵다면 메모장 등 텍스트 편집기로 열고 같은 프로젝트 폴더에 저장해요.",
-  },
-  {
-    id: "1-5",
-    title: "Sol에게 2차 구현 요청하기",
-    category: "week1",
-    when: "IMPROVEMENTS_BRIEF.txt를 작성하고 저장한 다음 · Sol 선택",
-    text: "IMPROVEMENTS_BRIEF.txt 기반으로 구현해줘.\n먼저 저장된 파일을 읽고 이번에 바꿀 내용을 확인해줘.\n미정인 기술 사항은 기존 프로젝트에 맞게 판단하고,\n원하는 결과가 불분명한 부분은 먼저 제안해줘.\n\n구현 후 기본 PDF 불러오기, 페이지 추가·삭제·이동, 필기·지우기,\nPDF 합치기와 저장이 계속 작동하는지도 확인해줘.",
-    check: "추가한 기능을 직접 써보고, 저장한 PDF를 다시 열어 결과를 확인해요.",
-  },
-  {
-    id: "1-6",
-    title: "다음에도 다시 실행하기",
-    category: "week1",
-    when: "수업을 마치기 전",
-    text: "다음에 이 프로젝트를 다시 열었을 때 도구를 실행하는 방법을\nREADME.md에 초보자도 따라 할 수 있게 적어줘.\n지금 사용 중인 운영체제에 맞춰 설명하고, 종료하는 방법도 알려줘.",
-    check:
-      "다음 개선은 IMPROVEMENTS_BRIEF.txt를 새로 작성하고 2차 구현 프롬프트를 다시 사용해요.",
+      "더 개선하고 싶다면 IMPROVEMENTS_BRIEF.txt를 복사해 새로 작성하고, 같은 프롬프트로 다시 맡겨요.",
   },
 ];
 
