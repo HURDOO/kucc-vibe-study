@@ -23,7 +23,7 @@ export const weekTwoPrompts: Prompt[] = [
     title: "BRIEF 스킬 만들기",
     category: "week2",
     when: "STEP 1 · kucc-vibe-study-week1 프로젝트의 새 채팅에서",
-    text: "이 폴더의 PROJECT_BRIEF.txt에서 내용은 비우고 양식만 남겨서 project-brief 스킬로 만들어줘.",
+    text: "이 폴더의 PROJECT_BRIEF.txt 양식 참고해서 project-brief 스킬로 만들어줘.",
     check:
       "모델은 GPT-6.1 Sol, 추론 수준은 Medium으로 맞춰요. 집에서는 Extra High로!",
   },
@@ -149,6 +149,64 @@ export const serverChecks = [
     id: "server-off",
     label: "서버를 끈 채로 글을 쓰면 실패한다",
     detail: "확인한 뒤 서버를 다시 켜요.",
+  },
+];
+
+// 바이브코딩 근황 장(news-coding ~ news-pickle) 요약. 날짜와 숫자는 슬라이드 그대로.
+export const weekTwoNews = [
+  {
+    label: "코딩 모델 · 9월 22일 이후",
+    title: "코딩은 Claude가 GPT를 이겼다",
+    text: "Claude Opus 5.5가 나온 뒤 코딩은 Claude라는 평이 대세예요. Terminal-Bench 4.0에서 Claude Code 64.9, Codex 58.2.",
+    slide: "news-coding",
+  },
+  {
+    label: "Google · 10월 13일",
+    title: "Gemini 4 Argon: 확실히 극 문과",
+    text: "코딩은 Claude만 못하지만, 작문과 창의성, 시각·청각 같은 멀티모달은 월등하다는 평이 많아요.",
+    slide: "news-argon",
+  },
+  {
+    label: "Google · 10월 28일",
+    title: "Gemini 4 Carbon, 하지만 아직 못 써요",
+    text: "종합 점수로는 세계 1위지만, 아직 보안 기업에게만 먼저 제공돼요. 일반 공개일은 미정이에요.",
+    slide: "news-carbon",
+  },
+  {
+    label: "에이전트 · 최근 석 달",
+    title: "이제 AI가 먼저 움직인다",
+    text: "채팅을 보내야 일하던 AI에서, 상시 돌아가며 허락이 필요할 때만 나를 부르는 비서로 바뀌고 있어요.",
+    slide: "news-agents",
+  },
+  {
+    label: "xAI · 8월 11일",
+    title: "Grok Bot: 24시간 일하는 AI 팀원들",
+    text: "봇마다 자기 컴퓨터를 받아 내가 자리를 비워도 일해요. ‘비서실장’ 봇이 다른 봇들을 지휘해요.",
+    slide: "news-grok",
+  },
+  {
+    label: "Meta · 9월 8일",
+    title: "Meta Muse: 장보기부터 결제까지",
+    text: "이메일, 여행 예약, 장보기와 결제까지 일상 일을 대신 해 주는 에이전트예요. 지금은 미국만.",
+    slide: "news-muse",
+  },
+  {
+    label: "OpenAI · 9월 29일",
+    title: "Dots: 대화가 멈춰도 일하는 점",
+    text: "나만의 dot에 일을 맡겨 두면 대화를 끝내도 계속 일해요. 앱 4,000개 이상과 연결돼요.",
+    slide: "news-dots",
+  },
+  {
+    label: "Anthropic · 10월 21일",
+    title: "Claude Duet: 묻기 전에 먼저 챙기는 비서",
+    text: "아침 브리핑과 수시 점검으로 먼저 알려 주고, 전송·결제·서명·삭제 전에는 꼭 허락을 받아요.",
+    slide: "news-duet",
+  },
+  {
+    label: "한국 · 요즘 가장 핫한",
+    title: "피클: 전화까지 대신 걸어 주는 비서",
+    text: "네이버, 카카오톡, 쿠팡, 정부24를 연결해 환불, KTX 취소표 감시, 예약까지. 안 되면 전화도 걸어요.",
+    slide: "news-pickle",
   },
 ];
 

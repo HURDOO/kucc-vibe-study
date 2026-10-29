@@ -15,6 +15,7 @@ import {
   filledBrief,
   serverChecks,
   serverIdeas,
+  weekTwoNews,
   weekTwoPrompt,
 } from "./week-two";
 
@@ -290,8 +291,21 @@ export default function WeekTwo() {
             )}
             <div className="discussion-card">
               <h3>수정 기능을 만드는 동안 · 바이브코딩 근황</h3>
-              <p>지난주 이후 바뀐 모델과 도구 소식을 함께 나눠요.</p>
-              <SlideLink id="div-news">근황 슬라이드 보기</SlideLink>
+              <p>
+                코딩 모델 판도가 바뀌었고, 이제는 채팅을 보내지 않아도 먼저
+                움직이는 에이전트의 시대예요.
+              </p>
+              <SlideLink id="div-news">근황 슬라이드 처음부터 보기</SlideLink>
+            </div>
+            <div className="idea-grid news-grid">
+              {weekTwoNews.map((news) => (
+                <article key={news.slide}>
+                  <span className="news-label">{news.label}</span>
+                  <h3>{news.title}</h3>
+                  <p>{news.text}</p>
+                  <SlideLink id={news.slide}>슬라이드</SlideLink>
+                </article>
+              ))}
             </div>
           </LessonSection>
           <LessonSection

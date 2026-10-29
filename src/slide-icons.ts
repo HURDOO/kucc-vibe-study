@@ -14,6 +14,8 @@ const paths: Record<string, string> = {
     '<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>',
   Check:
     '<path d="M20 6 9 17l-5-5"/>',
+  Clock:
+    '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
   Cloud:
     '<path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>',
   Code:

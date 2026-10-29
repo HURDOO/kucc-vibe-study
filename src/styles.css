@@ -2248,6 +2248,12 @@ details[open] > summary .details-plus {
   align-self: flex-start;
   font-size: 0.875rem;
 }
+.news-grid .news-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--brand);
+}
 .share-cta {
   display: flex;
   align-items: center;

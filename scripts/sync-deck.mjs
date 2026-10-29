@@ -62,4 +62,18 @@ for (const file of Object.values(assets)) {
     console.warn(`경고: public${file} 파일이 없습니다.`);
   }
 }
+
+// <x-icon name="..."> 중 src/slide-icons.ts에 없는 이름은 사이트에서 빈칸으로 보인다.
+const iconSource = await readFile(path.join(root, "src/slide-icons.ts"), "utf8");
+const knownIcons = new Set([...iconSource.matchAll(/^ {2}([A-Z]\w*):/gm)].map((m) => m[1]));
+const missingIcons = new Map();
+for (const id of deck.order) {
+  const html = await readFile(path.join(target, `${id}.html`), "utf8");
+  for (const [, name] of html.matchAll(/<x-icon name="(\w+)"/g)) {
+    if (!knownIcons.has(name)) missingIcons.set(name, [...(missingIcons.get(name) ?? []), id]);
+  }
+}
+for (const [name, ids] of missingIcons) {
+  console.warn(`경고: 아이콘 ${name}이 src/slide-icons.ts에 없습니다 (${[...new Set(ids)].join(", ")})`);
+}
 console.log(`${deck.title}: ${deck.order.length}장 → src/slides/week${week}/`);
