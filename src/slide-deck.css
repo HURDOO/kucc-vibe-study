@@ -85,6 +85,26 @@
 .deck-slide img {
   display: block;
 }
+/* 표: 칸마다 선을 긋고, 칸 안은 일반 글자로만 표시한다(2주차 PDF 기준) */
+.deck-slide table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  flex: none;
+}
+.deck-slide th,
+.deck-slide td {
+  border: 2px solid #cfcfcf;
+  padding: 0.35em 0.6em;
+  text-align: left;
+  vertical-align: middle;
+}
+.deck-slide th {
+  font-weight: 700;
+}
+.deck-slide td b {
+  font-weight: inherit;
+}
 .deck-slide x-icon {
   display: flex;
   flex: none;

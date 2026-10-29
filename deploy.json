@@ -3,11 +3,11 @@
   "appId": "kucc",
   "imageRepository": "ghcr.io/hurdoo/kucc-vibe-study",
   "displayName": "KUCC 바이브코딩 스터디",
-  "description": "KUCC 7주 바이브코딩 스터디 교안, 프롬프트와 발표 자료",
+  "description": "KUCC 7주 바이브코딩 스터디 교안, 프롬프트, 발표 자료와 커뮤니티 목록",
   "containerPort": 8080,
   "healthPath": "/healthz",
   "access": "public",
-  "dataEnabled": false,
+  "dataEnabled": true,
   "resources": {
     "memoryMiB": 256,
     "cpus": 0.5,
@@ -22,6 +22,7 @@
   "context": ".",
   "checks": [
     ["npm", "ci", "--no-audit", "--no-fund"],
+    ["npm", "test"],
     ["npm", "run", "build"]
   ]
 }

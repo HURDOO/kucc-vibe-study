@@ -1,7 +1,9 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { prompts, weeks, type Week } from "./content";
+import CommunityPage from "./Community";
+import { currentWeek, prompts, weeks, type Week } from "./content";
 import WeekOne from "./WeekOne";
-import { slides } from "./week-one-slides";
+import WeekTwo from "./WeekTwo";
+import { decks, type DeckWeek } from "./slides";
 import "./slide-deck.css";
 import {
   Eyebrow,
@@ -30,7 +32,7 @@ function CurriculumRows({ compact = false }: { compact?: boolean }) {
             .map((week) => (
               <a
                 href={`#/week/${week.number}`}
-                className={`curriculum-row${week.number === 1 ? " current" : ""}`}
+                className={`curriculum-row${week.number === currentWeek ? " current" : ""}`}
                 key={week.number}
               >
                 <span className="week-index">
@@ -45,7 +47,11 @@ function CurriculumRows({ compact = false }: { compact?: boolean }) {
                 </div>
                 <span className="week-topic">{week.topic}</span>
                 <span className="status-label">
-                  {week.number === 1 ? "자료 보기" : "미리보기"}
+                  {week.number === currentWeek
+                    ? "이번 주"
+                    : week.number < currentWeek
+                      ? "자료 보기"
+                      : "미리보기"}
                 </span>
               </a>
             ))}
@@ -56,6 +62,32 @@ function CurriculumRows({ compact = false }: { compact?: boolean }) {
 }
 
 function Home() {
+  const shortcuts = [
+    {
+      href: `#/week/${currentWeek}`,
+      icon: "book" as const,
+      title: "실습 안내",
+      text: "스킬로 기획서 쓰기부터 터널까지 순서대로 따라가요",
+    },
+    {
+      href: `#/slides/${currentWeek}/1`,
+      icon: "play" as const,
+      title: "발표 슬라이드",
+      text: `오늘 수업 ${decks[currentWeek as DeckWeek].slides.length}장을 한눈에 보기`,
+    },
+    {
+      href: `#/prompts?category=week${currentWeek}`,
+      icon: "copy" as const,
+      title: "프롬프트 #1–#9",
+      text: "슬라이드의 번호 그대로, 필요할 때 복사해요",
+    },
+    {
+      href: "#/community",
+      icon: "users" as const,
+      title: "서로 놀러가기",
+      text: "내 커뮤니티 주소를 올리고, 다른 사람 커뮤니티에 들어가요",
+    },
+  ];
   return (
     <>
       <section className="home-hero">
@@ -65,24 +97,24 @@ function Home() {
         <div className="container hero-inner">
           <div className="hero-copy">
             <p className="step-pill">
-              <span aria-hidden="true">&gt;</span> WEEK 01 · 1주차 자료가
-              열렸어요
+              <span aria-hidden="true">&gt;</span> WEEK{" "}
+              {String(currentWeek).padStart(2, "0")} · 오늘 수업 자료
             </p>
             <Eyebrow>KUCC VIBE CODING STUDY · 7 WEEKS</Eyebrow>
             <h1 className="gradient-title">
-              작은 도구부터,
+              바이브코딩으로
               <br />
-              직접 만들어봐요.
+              간단한 커뮤니티 만들기
             </h1>
             <p className="hero-description">
-              코딩이 처음이어도 괜찮아요. 기획서를 쓰고, 에이전트에게 맡기고,
-              결과를 확인하고, 다시 개선해요.
+              서버를 만들고, 내 노트북을 인터넷에 열고, 에이전트에게 기억과
+              노하우를 남겨요.
             </p>
             <div className="hero-actions">
-              <a className="button primary" href="#/week/1">
-                1주차 실습 시작하기 <Icon name="arrow" size={18} />
+              <a className="button primary" href={`#/week/${currentWeek}`}>
+                {currentWeek}주차 실습 시작하기 <Icon name="arrow" size={18} />
               </a>
-              <a className="button outlined" href="#/slides/1/1">
+              <a className="button outlined" href={`#/slides/${currentWeek}/1`}>
                 <Icon name="play" size={16} /> 발표 슬라이드
               </a>
             </div>
@@ -94,31 +126,15 @@ function Home() {
         <div className="section-heading">
           <div>
             <Eyebrow>THIS WEEK</Eyebrow>
-            <h2>내가 쓸 PDF 편집기, 오늘 직접 만들어요.</h2>
-            <p>준비된 프롬프트로 시작하고, 내 말로 바꿔보세요.</p>
+            <h2>오늘은 서로의 커뮤니티에 놀러가요.</h2>
+            <p>수업 중에 필요한 자료를 여기서 바로 열어요.</p>
           </div>
         </div>
-        <nav className="resource-shortcuts" aria-label="1주차 자료 바로가기">
-          {[
-            {
-              href: "#/week/1",
-              icon: "book" as const,
-              title: "실습 안내",
-              text: "복제부터 2차 개선까지 순서대로 따라가요",
-            },
-            {
-              href: "#/slides/1/1",
-              icon: "play" as const,
-              title: "발표 슬라이드",
-              text: "오늘 수업 45장을 한눈에 보기",
-            },
-            {
-              href: "#/prompts",
-              icon: "copy" as const,
-              title: "프롬프트 모음",
-              text: "필요할 때 복사해서 써요",
-            },
-          ].map((item, i) => (
+        <nav
+          className="resource-shortcuts four"
+          aria-label={`${currentWeek}주차 자료 바로가기`}
+        >
+          {shortcuts.map((item, i) => (
             <a href={item.href} key={item.href}>
               <span className="shortcut-top">
                 <Icon name={item.icon} size={26} />
@@ -129,6 +145,13 @@ function Home() {
               <Icon name="arrow" size={20} className="shortcut-arrow" />
             </a>
           ))}
+        </nav>
+        <nav className="past-week" aria-label="지난 주차 자료">
+          <span>지난 주차</span>
+          <strong>1주차 · {weeks[0].subtitle}</strong>
+          <a href="#/week/1">실습 안내</a>
+          <a href="#/slides/1/1">슬라이드</a>
+          <a href="#/prompts?category=week1">프롬프트</a>
         </nav>
       </section>
       <section className="container home-section">
@@ -144,8 +167,8 @@ function Home() {
         </div>
         <CurriculumRows compact />
         <p className="section-footnote">
-          1주차 실습 자료가 준비되어 있어요. 다음 주차의 상세 자료는 순서대로
-          채워집니다.
+          1–{currentWeek}주차 자료가 준비되어 있어요. 다음 주차의 상세 자료는
+          순서대로 채워집니다.
         </p>
       </section>
       <div className="container home-help">
@@ -217,8 +240,8 @@ function UpcomingWeek({ week }: { week: Week }) {
             프롬프트는 수업 전에 추가됩니다.
           </p>
           <span>{week.topic}</span>
-          <a href="#/week/1" className="text-link">
-            1주차 자료 먼저 보기 <Icon name="arrow" size={16} />
+          <a href={`#/week/${currentWeek}`} className="text-link">
+            {currentWeek}주차 자료 먼저 보기 <Icon name="arrow" size={16} />
           </a>
         </aside>
       </div>
@@ -238,20 +261,22 @@ function UpcomingWeek({ week }: { week: Week }) {
   );
 }
 
+const promptTabs = [
+  { id: "week2", label: "2주차" },
+  { id: "week1", label: "1주차" },
+  { id: "common", label: "공통 도구" },
+  { id: "all", label: "전체" },
+];
+const pickCategory = (value: string | null) =>
+  promptTabs.some((tab) => tab.id === value)
+    ? value!
+    : `week${currentWeek}`;
+
 function PromptsPage({ initialCategory }: { initialCategory: string | null }) {
-  const [category, setCategory] = useState(
-    initialCategory === "week1" || initialCategory === "common"
-      ? initialCategory
-      : "all",
-  );
+  const [category, setCategory] = useState(pickCategory(initialCategory));
   const [search, setSearch] = useState("");
   useEffect(
-    () =>
-      setCategory(
-        initialCategory === "week1" || initialCategory === "common"
-          ? initialCategory
-          : "all",
-      ),
+    () => setCategory(pickCategory(initialCategory)),
     [initialCategory],
   );
   const filtered = prompts.filter(
@@ -277,11 +302,7 @@ function PromptsPage({ initialCategory }: { initialCategory: string | null }) {
       />
       <div className="prompt-filter-bar">
         <div className="filter-tabs" aria-label="프롬프트 분류">
-          {[
-            { id: "all", label: "전체" },
-            { id: "week1", label: "1주차" },
-            { id: "common", label: "공통 도구" },
-          ].map((tab) => (
+          {promptTabs.map((tab) => (
             <button
               key={tab.id}
               aria-pressed={category === tab.id}
@@ -318,7 +339,7 @@ function PromptsPage({ initialCategory }: { initialCategory: string | null }) {
           <PromptCard
             key={prompt.id}
             prompt={prompt}
-            defaultOpen={prompt.id === "1-1"}
+            defaultOpen={prompt.category === "week2" || prompt.id === "1-1"}
           />
         ))}
       </div>
@@ -341,8 +362,9 @@ function PromptsPage({ initialCategory }: { initialCategory: string | null }) {
       <div className="prompt-library-note">
         <Icon name="book" size={20} />
         <p>
-          어떤 순서로 사용할지 궁금하다면 <a href="#/week/1">1주차 실습 안내</a>
-          를 함께 열어두세요.
+          어떤 순서로 사용할지 궁금하다면{" "}
+          <a href={`#/week/${currentWeek}`}>{currentWeek}주차 실습 안내</a>를
+          함께 열어두세요.
         </p>
       </div>
     </div>
@@ -544,10 +566,11 @@ function toggleFullscreen() {
   else document.documentElement.requestFullscreen().catch(() => {});
 }
 
-function SlideDeck({ index }: { index: number }) {
+function SlideDeck({ week, index }: { week: DeckWeek; index: number }) {
   const [overview, setOverview] = useState(false);
   const [fullscreen, setFullscreen] = useState(!!document.fullscreenElement);
   const idle = useIdle(2500);
+  const slides = decks[week].slides;
   const slide = slides[index];
   useEffect(() => {
     const update = () => setFullscreen(!!document.fullscreenElement);
@@ -555,7 +578,7 @@ function SlideDeck({ index }: { index: number }) {
     return () => document.removeEventListener("fullscreenchange", update);
   }, []);
   const go = (next: number) => {
-    window.location.hash = `/slides/1/${Math.max(1, Math.min(slides.length, next + 1))}`;
+    window.location.hash = `/slides/${week}/${Math.max(1, Math.min(slides.length, next + 1))}`;
     setOverview(false);
   };
   useEffect(() => {
@@ -592,17 +615,17 @@ function SlideDeck({ index }: { index: number }) {
         toggleFullscreen();
       if (event.key === "Escape") {
         if (overview) setOverview(false);
-        else window.location.hash = "/week/1";
+        else window.location.hash = `/week/${week}`;
       }
     };
     window.addEventListener("keydown", key);
     return () => window.removeEventListener("keydown", key);
-  }, [index, overview]);
+  }, [week, index, overview]);
   return (
     <div className={`slide-deck${idle && !overview ? " idle" : ""}`}>
       <header className="slide-header">
-        <a href="#/week/1" className="slide-back">
-          ← 1주차 실습으로
+        <a href={`#/week/${week}`} className="slide-back">
+          ← {week}주차 실습으로
         </a>
         <span>
           KUCC <span>/</span> VIBE CODING
@@ -630,7 +653,9 @@ function SlideDeck({ index }: { index: number }) {
       <main id="main-content" tabIndex={-1} className="slide-stage">
         {overview ? (
           <div className="slide-overview">
-            <Eyebrow>WEEK 01 · 전체 슬라이드</Eyebrow>
+            <Eyebrow>
+              WEEK {String(week).padStart(2, "0")} · 전체 슬라이드
+            </Eyebrow>
             <div>
               {slides.map((item, i) => (
                 <button
@@ -645,7 +670,7 @@ function SlideDeck({ index }: { index: number }) {
             </div>
           </div>
         ) : (
-          <SlideCanvas html={slide.html} index={index} />
+          <SlideCanvas html={slide.html} index={week * 1000 + index} />
         )}
       </main>
       <footer className="slide-controls">
@@ -718,27 +743,32 @@ export default function App() {
   const [hash, setHash] = useState(window.location.hash.slice(1) || "/");
   const [path, query = ""] = hash.split("?");
   const weekMatch = path.match(/^\/week\/([1-7])\/?$/);
-  const slideMatch = path.match(/^\/slides\/1\/(\d+)\/?$/);
-  const slideIndex = slideMatch ? Number(slideMatch[1]) - 1 : -1;
-  const isSlide = slideIndex >= 0 && slideIndex < slides.length;
+  const slideMatch = path.match(/^\/slides\/([12])\/(\d+)\/?$/);
+  const slideWeek = (slideMatch ? Number(slideMatch[1]) : 1) as DeckWeek;
+  const slideIndex = slideMatch ? Number(slideMatch[2]) - 1 : -1;
+  const isSlide =
+    slideIndex >= 0 && slideIndex < decks[slideWeek].slides.length;
   useEffect(() => {
     const update = () => setHash(window.location.hash.slice(1) || "/");
     window.addEventListener("hashchange", update);
     return () => window.removeEventListener("hashchange", update);
   }, []);
   useEffect(() => {
-    const section =
-      path === "/week/1" ? new URLSearchParams(query).get("section") : null;
+    const section = weekMatch
+      ? new URLSearchParams(query).get("section")
+      : null;
     const target = section ? document.getElementById(section) : null;
     if (target) target.scrollIntoView({ block: "start" });
     else window.scrollTo({ top: 0, behavior: "instant" });
     const title = isSlide
-      ? `1주차 슬라이드 ${slideIndex + 1}`
+      ? `${slideWeek}주차 슬라이드 ${slideIndex + 1}`
       : weekMatch
         ? `${weekMatch[1]}주차 · ${weeks[Number(weekMatch[1]) - 1].subtitle}`
         : path === "/prompts"
           ? "프롬프트 모음"
-          : path === "/curriculum"
+          : path === "/community"
+            ? "서로 놀러가기"
+            : path === "/curriculum"
             ? "7주 커리큘럼"
             : path === "/guide"
               ? "이용 안내"
@@ -746,7 +776,7 @@ export default function App() {
     document.title = `KUCC — ${title}`;
     document.getElementById("main-content")?.focus({ preventScroll: true });
   }, [path, query]);
-  if (isSlide) return <SlideDeck index={slideIndex} />;
+  if (isSlide) return <SlideDeck week={slideWeek} index={slideIndex} />;
   let page;
   if (path === "/") page = <Home />;
   else if (path === "/curriculum") page = <Curriculum />;
@@ -757,10 +787,13 @@ export default function App() {
       />
     );
   else if (path === "/guide") page = <Guide />;
+  else if (path === "/community") page = <CommunityPage />;
   else if (weekMatch)
     page =
-      Number(weekMatch[1]) === 1 ? (
+      weekMatch[1] === "1" ? (
         <WeekOne />
+      ) : weekMatch[1] === "2" ? (
+        <WeekTwo />
       ) : (
         <UpcomingWeek week={weeks[Number(weekMatch[1]) - 1]} />
       );

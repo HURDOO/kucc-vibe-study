@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
-import { prompts, type Prompt } from "./content";
+import { currentWeek, prompts, type Prompt } from "./content";
 import { weekOneRepository } from "./week-one";
 
 export function Icon({
@@ -22,7 +22,9 @@ export function Icon({
     | "grid"
     | "book"
     | "expand"
-    | "shrink";
+    | "shrink"
+    | "users"
+    | "refresh";
   size?: number;
   className?: string;
 }) {
@@ -83,6 +85,15 @@ export function Icon({
         <path d="M12 5v16M3 4h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5v15h-5a4 4 0 0 0-4 2 4 4 0 0 0-4-2H3z" />
       </>
     ),
+    users: (
+      <>
+        <circle cx="9" cy="8" r="3.5" />
+        <path d="M2.5 20v-1.5A4.5 4.5 0 0 1 7 14h4a4.5 4.5 0 0 1 4.5 4.5V20M16 4.6a3.5 3.5 0 0 1 0 6.8M18.5 14a4.5 4.5 0 0 1 3 4.3V20" />
+      </>
+    ),
+    refresh: (
+      <path d="M20 11a8 8 0 0 0-14.3-4.9L4 8M4 4v4h4M4 13a8 8 0 0 0 14.3 4.9L20 16m0 4v-4h-4" />
+    ),
   };
   return (
     <svg
@@ -126,6 +137,7 @@ export function Header({ route }: { route: string }) {
     { href: "/", label: "홈" },
     { href: "/curriculum", label: "커리큘럼" },
     { href: "/prompts", label: "프롬프트" },
+    { href: "/community", label: "커뮤니티" },
     { href: "/guide", label: "이용 안내" },
   ];
   return (
@@ -152,8 +164,8 @@ export function Header({ route }: { route: string }) {
             </a>
           ))}
         </nav>
-        <a href="#/week/1" className="header-cta">
-          <span aria-hidden="true">&gt;</span> 1주차 시작하기
+        <a href={`#/week/${currentWeek}`} className="header-cta">
+          <span aria-hidden="true">&gt;</span> {currentWeek}주차 시작하기
         </a>
         <button
           className="mobile-menu icon-button"
@@ -180,6 +192,7 @@ export function Footer() {
         <nav className="footer-links" aria-label="바로가기">
           <a href="#/curriculum">수업 자료</a>
           <a href="#/prompts">프롬프트 모음</a>
+          <a href="#/community">커뮤니티 놀러가기</a>
           <a href="#/guide">도움이 필요할 때</a>
         </nav>
         <div className="footer-bottom">
@@ -251,8 +264,8 @@ export function useSavedString(key: string, fallback = "") {
   return [value, update] as const;
 }
 
-export function useProgress() {
-  const [raw, save] = useSavedString("kucc-week1-progress-v2", "[]");
+export function useProgress(key = "kucc-week1-progress-v2") {
+  const [raw, save] = useSavedString(key, "[]");
   let checked: string[] = [];
   try {
     const parsed: unknown = JSON.parse(raw);
@@ -391,7 +404,7 @@ export function PromptCard({
         aria-expanded={open}
         aria-controls={id}
       >
-        <span className="prompt-number">{prompt.id}</span>
+        <span className="prompt-number">{prompt.number ?? prompt.id}</span>
         <span className="prompt-heading-text">
           <strong>{prompt.title}</strong>
           <small>{prompt.when}</small>
@@ -422,19 +435,23 @@ export function PromptCard({
             </small>
           </div>
         )}
-        <div className="code-panel">
+        <div className={`code-panel${prompt.destination ? " file" : ""}`}>
           <div className="code-toolbar">
             <span className="window-dots" aria-hidden="true">
               <i />
               <i />
               <i />
             </span>
-            <span>CODEX에 입력</span>
+            <span>{prompt.destination ?? "CODEX에 입력"}</span>
             <CopyButton
               text={text}
               disabled={prompt.clone && !valid}
               label={
-                prompt.clone && !valid ? "주소 입력 후 복사" : "프롬프트 복사"
+                prompt.clone && !valid
+                  ? "주소 입력 후 복사"
+                  : prompt.destination
+                    ? "내용 복사"
+                    : "프롬프트 복사"
               }
             />
           </div>
@@ -494,5 +511,97 @@ export function CommonPrompt() {
       prompt={prompts.find((prompt) => prompt.id === "C-1")!}
       defaultOpen={false}
     />
+  );
+}
+
+export function LessonSection({
+  id,
+  number,
+  pill,
+  title,
+  description,
+  children,
+}: {
+  id: string;
+  number?: string;
+  // STEP 번호 대신 쓸 라벨
+  pill?: string;
+  title: string;
+  description: string;
+  children: ReactNode;
+}) {
+  return (
+    <section id={id} className="lesson-section">
+      <div className="lesson-heading">
+        <p className="step-pill">
+          <span aria-hidden="true">&gt;</span> {pill ?? `STEP ${number}`}
+        </p>
+        <h2>{title}</h2>
+        <p>{description}</p>
+      </div>
+      {children}
+    </section>
+  );
+}
+
+export function LessonSidebar({
+  week,
+  steps,
+  done,
+  total,
+  doneMessage,
+}: {
+  week: number;
+  steps: { id: string; label: string }[];
+  done: number;
+  total: number;
+  doneMessage: string;
+}) {
+  return (
+    <aside className="lesson-sidebar">
+      <div className="sidebar-inner">
+        <span className="sidebar-label">오늘의 순서</span>
+        <nav aria-label={`${week}주차 실습 단계`}>
+          {steps.map((step, i) => (
+            <button
+              key={step.id}
+              onClick={() =>
+                document.getElementById(step.id)?.scrollIntoView({
+                  behavior: window.matchMedia(
+                    "(prefers-reduced-motion: reduce)",
+                  ).matches
+                    ? "instant"
+                    : "smooth",
+                  block: "start",
+                })
+              }
+            >
+              <span>{String(i + 1).padStart(2, "0")}</span>
+              {step.label}
+            </button>
+          ))}
+        </nav>
+        <div className="progress-box">
+          <div>
+            <span>나의 체크리스트</span>
+            <strong>
+              {done}
+              <small> / {total}</small>
+            </strong>
+          </div>
+          <progress
+            value={done}
+            max={total}
+            aria-label={`${week}주차 완료 진행률`}
+          />
+          <p>
+            {done === total ? doneMessage : "체크한 항목은 이 브라우저에 저장돼요."}
+          </p>
+        </div>
+        <a href={`#/prompts?category=week${week}`} className="sidebar-link">
+          프롬프트만 모아보기 <Icon name="up-right" size={15} />
+        </a>
+      </div>
+    </aside>
   );
 }

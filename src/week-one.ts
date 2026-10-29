@@ -1,7 +1,7 @@
 import brief from "./materials/PROJECT_BRIEF.txt?raw";
 import improvementsBrief from "./materials/IMPROVEMENTS_BRIEF.txt?raw";
 import type { Prompt } from "./content";
-import type { SlideId } from "./week-one-slides";
+import type { SlideId } from "./slides";
 
 export { brief, improvementsBrief };
 export const weekOneRepository =

@@ -33,7 +33,7 @@ npm run preview
 
 배포 대상은 **https://kucc.app.hurdoo.kr**이며 인터넷에 공개합니다. GitHub 저장소는 `HURDOO/kucc-vibe-study`, 이미지 저장소는 `ghcr.io/hurdoo/kucc-vibe-study`입니다. 프로젝트 폴더 이름과 달리 대시보드 앱 ID는 도메인에 맞춰 `kucc`입니다.
 
-`Dockerfile`은 잠금 파일로 Node.js 24 빌드를 만들고 Caddy로 정적 파일을 제공합니다. 베이스 이미지와 GitHub Actions는 digest/커밋에 고정했습니다. ARM64 컨테이너는 8080 포트와 `/healthz`를 사용합니다. 읽기 전용 루트 파일시스템, `/tmp` tmpfs, 모든 capability 제거, `no-new-privileges` 환경에서 실행할 수 있습니다. Caddy의 파일 capability와 관리 API·컨테이너 내부 HTTPS·설정 저장을 비활성화하며, 외부 HTTPS는 배포 플랫폼이 관리합니다. 서버 데이터, `/data` 볼륨, 런타임 비밀키는 필요하지 않습니다. 체크리스트는 각 방문자의 브라우저에 보관됩니다.
+`Dockerfile`은 잠금 파일로 Node.js 24 빌드를 만들고, 의존성 없는 Node 서버(`server/`)가 정적 파일과 2주차 커뮤니티 목록 API(`/api/communities`)를 함께 제공합니다. 목록은 `/data/communities.json`에 저장하므로 `dataEnabled: true`입니다. trycloudflare.com 주소만 받고, 같은 이름은 덮어쓰며, 12시간이 지나면 사라집니다. `/data`에 쓸 수 없으면 수업 자료는 그대로 제공하고 목록 API만 503을 돌려줍니다. 베이스 이미지와 GitHub Actions는 digest/커밋에 고정했습니다. ARM64 컨테이너는 8080 포트와 `/healthz`를 사용합니다. 읽기 전용 루트 파일시스템, `/tmp` tmpfs, 모든 capability 제거, `no-new-privileges` 환경에서 실행할 수 있습니다. 외부 HTTPS는 배포 플랫폼이 관리합니다. 런타임 비밀키는 필요하지 않습니다. 체크리스트는 각 방문자의 브라우저에 보관됩니다. 서버 테스트는 `npm test`, 로컬 실행은 `npm run build && npm run serve:local`(데이터는 `.data/`)입니다.
 
 최초 GHCR 패키지는 GitHub Actions의 **Publish ARM64 image**를 수동 실행하여 저장소에 연결합니다. 워크플로는 프로젝트 빌드를 검증하고 `GITHUB_TOKEN`으로 ARM64 이미지를 발행하며 별도 토큰을 저장소에 넣지 않습니다. 푸시만으로 발행하거나 서버를 배포하지 않습니다.
 
@@ -54,7 +54,10 @@ node /Users/hurdoo/coding/production/bin/deployctl.mjs --json --compact plan kuc
 - `#/`: 소개, 1주차 바로가기, 7주 커리큘럼
 - `#/curriculum`: 전체 커리큘럼
 - `#/week/1`: 복제부터 2차 개선까지 안내, 두 브리프 복사·다운로드, 기본 기능 체크리스트
-- `#/week/2`–`#/week/7`: 주제와 학습 목표 미리보기. 상세 교안은 준비 중임을 표시합니다.
+- `#/week/2`: 2주차 실습 안내(프롬프트 #1–#9, 체크리스트, 서버·AGENTS.md·Skills 요약)
+- `#/community`: 2주차 STEP 11 커뮤니티 등록·둘러보기(접속 가능 여부 표시)
+- `#/slides/2/1`: 2주차 발표 슬라이드 55장(Artifact "KUCC 바이브코딩 스터디 2주차")
+- `#/week/3`–`#/week/7`: 주제와 학습 목표 미리보기. 상세 교안은 준비 중임을 표시합니다.
 - `#/prompts`: 1주차 4개(발표 슬라이드와 같은 문구) + 공통 3개 프롬프트, 분류, 검색, 복사
 - `#/guide`: 수업 준비물, Windows/Mac 안내, 자주 묻는 질문
 - `#/slides/1/1`: 1주차 발표용 웹 슬라이드 45장. claude.ai Artifact 덱 "KUCC 바이브코딩 스터디 1주차"를 그대로 옮겼습니다. 슬라이드는 창에 꽉 차게 표시되고, 위아래 조작 막대는 마우스를 움직이거나 화면을 누르면 나타났다가 2.5초 뒤 사라집니다. 방향키, Space, Home/End, O(목차), F(전체 화면), Esc(실습으로) 지원
@@ -69,7 +72,7 @@ node /Users/hurdoo/coding/production/bin/deployctl.mjs --json --compact plan kuc
 - `src/codex-intro.ts`: 실습 페이지의 Codex 소개 문구, 해설, 예시 코드와 공식 출처
 - `src/CodexIntro.tsx`, `src/CodexVisual.tsx`, `src/codex-intro.css`: 실습 페이지의 Codex 해설과 시각 예시
 - `src/slides/week1/*.html`: 발표 슬라이드 원문. Artifact 덱의 `project/slides/<id>.html`과 같은 형식(1920×1080, 인라인 스타일, `<aside>` 발표자 노트)이며 로고 주소만 `/slides/kucc-logo.svg`로 바꿨습니다
-- `src/week-one-slides.ts`: 슬라이드 순서, 목차 제목 추출, `<x-icon>` 아이콘 변환, 슬라이드 주소 생성
+- `src/slides.ts`: 슬라이드 순서, 목차 제목 추출, `<x-icon>` 아이콘 변환, 슬라이드 주소 생성
 - `src/slide-deck.css`: Artifact 슬라이드 형식의 기본 규칙(기본 글자 크기, 세로 flex, 최소 너비 0, 칠하기 순서, 목록 들여쓰기). Artifact에서 내보낸 PDF와 45장을 비교해 맞췄습니다
 - `src/slide-icons.ts`: `<x-icon>` 이름에 가장 가까운 [Lucide](https://lucide.dev) 아이콘(ISC). Artifact 전용 아이콘 글꼴은 쓸 수 없어 모양이 조금 다릅니다
 - `src/materials/PROJECT_BRIEF.txt`, `src/materials/IMPROVEMENTS_BRIEF.txt`: 실습 레포의 브리프 원문
@@ -106,7 +109,7 @@ Codex 소개의 날씨 확률은 가상 수치이고, `tool: 파일 쓰기` 같�
 
 발표 슬라이드는 Artifact 덱의 문구를 그대로 옮겼으며, 위 기준으로 다시 검토하거나 고치지 않았습니다. 예를 들어 승인 모드 슬라이드는 "명령어를 실행할 때마다 확인"으로 단순화해 실습 페이지 설명과 다릅니다.
 
-슬라이드를 바꿀 때는 Artifact 덱을 수정한 뒤 해당 `project/slides/<id>.html`을 `src/slides/week1/`에 다시 복사하고, 순서가 바뀌면 `src/week-one-slides.ts`의 `slideOrder`도 맞춥니다. 슬라이드 글꼴은 사용 글자와 KS X 1001 한글 2,350자로 줄인 파일이므로, 그 밖의 글자는 대체 글꼴로 표시될 수 있습니다.
+2주차 덱은 Artifact에서 `project/deck.json`과 `project/slides/*.html`을 받은 폴더로 `node scripts/sync-deck.mjs 2 <폴더>`를 실행해 동기화합니다. 새 이미지는 `public/slides/week2/`에 넣고 `src/slides/week2/assets.json`에 추가하세요. 1주차 슬라이드를 바꿀 때는 Artifact 덱을 수정한 뒤 해당 `project/slides/<id>.html`을 `src/slides/week1/`에 다시 복사하고, 순서가 바뀌면 `src/week-one-slides.ts`의 `slideOrder`도 맞춥니다. 슬라이드 글꼴은 사용 글자와 KS X 1001 한글 2,350자로 줄인 파일이므로, 그 밖의 글자는 대체 글꼴로 표시될 수 있습니다.
 
 ## 저장과 접근성
 

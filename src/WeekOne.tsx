@@ -6,6 +6,8 @@ import {
   CopyButton,
   Eyebrow,
   Icon,
+  LessonSection,
+  LessonSidebar,
   PromptCard,
   useProgress,
 } from "./components";
@@ -22,36 +24,9 @@ import {
   weekOnePrompts,
   weekOneRepository,
 } from "./week-one";
-import { slideHref } from "./week-one-slides";
+import { slideHref } from "./slides";
 import briefUrl from "./materials/PROJECT_BRIEF.txt?url&no-inline";
 import improvementsUrl from "./materials/IMPROVEMENTS_BRIEF.txt?url&no-inline";
-
-function LessonSection({
-  id,
-  number,
-  title,
-  description,
-  children,
-}: {
-  id: string;
-  number: string;
-  title: string;
-  description: string;
-  children: ReactNode;
-}) {
-  return (
-    <section id={id} className="lesson-section">
-      <div className="lesson-heading">
-        <p className="step-pill">
-          <span aria-hidden="true">&gt;</span> STEP {number}
-        </p>
-        <h2>{title}</h2>
-        <p>{description}</p>
-      </div>
-      {children}
-    </section>
-  );
-}
 
 function Material({
   name,
@@ -198,53 +173,13 @@ export default function WeekOne() {
         </div>
       </div>
       <div className="lesson-layout">
-        <aside className="lesson-sidebar">
-          <div className="sidebar-inner">
-            <span className="sidebar-label">오늘의 순서</span>
-            <nav aria-label="1주차 실습 단계">
-              {steps.map((step, i) => (
-                <button
-                  key={step.id}
-                  onClick={() =>
-                    document.getElementById(step.id)?.scrollIntoView({
-                      behavior: window.matchMedia(
-                        "(prefers-reduced-motion: reduce)",
-                      ).matches
-                        ? "instant"
-                        : "smooth",
-                      block: "start",
-                    })
-                  }
-                >
-                  <span>{String(i + 1).padStart(2, "0")}</span>
-                  {step.label}
-                </button>
-              ))}
-            </nav>
-            <div className="progress-box">
-              <div>
-                <span>나의 체크리스트</span>
-                <strong>
-                  {done}
-                  <small> / {completionIds.length}</small>
-                </strong>
-              </div>
-              <progress
-                value={done}
-                max={completionIds.length}
-                aria-label="1주차 완료 진행률"
-              />
-              <p>
-                {done === completionIds.length
-                  ? "오늘의 실습 완료! 다음에도 이어서 개선해보세요."
-                  : "체크한 항목은 이 브라우저에 저장돼요."}
-              </p>
-            </div>
-            <a href="#/prompts?category=week1" className="sidebar-link">
-              프롬프트만 모아보기 <Icon name="up-right" size={15} />
-            </a>
-          </div>
-        </aside>
+        <LessonSidebar
+          week={1}
+          steps={steps}
+          done={done}
+          total={completionIds.length}
+          doneMessage="오늘의 실습 완료! 다음에도 이어서 개선해보세요."
+        />
         <div className="lesson-main">
           <LessonSection
             id="start"
@@ -527,8 +462,8 @@ export default function WeekOne() {
             <span>NEXT WEEK</span>
             <a href="#/week/2">
               <div>
-                <h3>AGENTS.md와 Skills</h3>
-                <p>작업 규칙과 반복할 절차, 서버와 클라이언트의 관계</p>
+                <h3>간단한 커뮤니티 만들기</h3>
+                <p>서버와 클라이언트, AGENTS.md와 Skills, 내 노트북을 인터넷에 열기</p>
               </div>
               <Icon name="arrow" size={26} />
             </a>

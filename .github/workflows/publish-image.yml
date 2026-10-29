@@ -25,9 +25,10 @@ jobs:
           node-version: '24'
           cache: npm
 
-      - name: Install locked dependencies and check production build
+      - name: Install locked dependencies, test server and check production build
         run: |
           npm ci --no-audit --no-fund
+          npm test
           npm run build
 
       - name: Read image repository from deployment contract

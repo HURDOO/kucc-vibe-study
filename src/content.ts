@@ -1,4 +1,8 @@
 import { weekOnePrompts } from "./week-one";
+import { weekTwoPrompts } from "./week-two";
+
+// 홈과 메뉴가 먼저 보여줄 이번 주차
+export const currentWeek = 2;
 
 export type Week = {
   number: number;
@@ -27,16 +31,16 @@ export const weeks: Week[] = [
   },
   {
     number: 2,
-    title: "내 도구에 주소가 생겼다",
-    subtitle: "개인용 웹 도구 제작과 배포",
-    topic: "AGENTS.md · Skills · 서버와 클라이언트",
+    title: "내 커뮤니티, 인터넷에 열기",
+    subtitle: "간단한 커뮤니티 만들기",
+    topic: "서버와 클라이언트 · AGENTS.md · Skills",
     description:
-      "나만 쓰던 도구를 친구도 열어볼 수 있도록. 작은 웹 도구를 만들고 인터넷에 올립니다.",
-    outcome: "친구에게 보낼 수 있는 웹 주소",
+      "BRIEF 스킬로 기획서를 직접 쓰고, 글이 CSV 파일에 쌓이는 커뮤니티를 만듭니다. 내 노트북을 터널로 인터넷에 열어 서로의 커뮤니티에 놀러갑니다.",
+    outcome: "친구 폰에서도 들어오는 내 커뮤니티 주소",
     goals: [
-      "서버와 클라이언트가 어떤 역할을 맡는지 이해합니다.",
-      "프로젝트의 작업 규칙과 반복할 절차를 정합니다.",
-      "배포한 주소를 다른 기기에서 열어봅니다.",
+      "BRIEF 스킬로 기획서를 처음부터 쓰고 구현을 맡깁니다.",
+      "서버와 클라이언트, localhost와 포트를 이해합니다.",
+      "AGENTS.md와 Skills로 에이전트에게 기억과 노하우를 남깁니다.",
     ],
   },
   {
@@ -113,14 +117,19 @@ export const weeks: Week[] = [
 
 export type Prompt = {
   id: string;
+  // 슬라이드의 "프롬프트 #번호". 없으면 id를 표시한다.
+  number?: string;
   title: string;
-  category: "week1" | "common";
+  category: "week1" | "week2" | "common";
   when: string;
   text: string;
   check: string;
+  // 코드 창 머리에 표시할 입력 위치. 없으면 "CODEX에 입력"
+  destination?: string;
   clone?: boolean;
 };
 export const prompts: Prompt[] = [
+  ...weekTwoPrompts,
   ...weekOnePrompts,
   {
     id: "C-1",

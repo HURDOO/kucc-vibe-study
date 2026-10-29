@@ -1,6 +1,6 @@
 import { codexTopics } from "./codex-intro";
 import CodexVisual from "./CodexVisual";
-import { slideHref } from "./week-one-slides";
+import { slideHref } from "./slides";
 import { Icon } from "./components";
 
 export default function CodexIntro() {

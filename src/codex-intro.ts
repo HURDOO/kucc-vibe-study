@@ -1,4 +1,4 @@
-import type { SlideId } from "./week-one-slides";
+import type { SlideId } from "./slides";
 
 export type CodexVisualKind =
   | "completion"

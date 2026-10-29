@@ -1,0 +1,50 @@
+<section id="login-answer" data-transition="fade" style="display:flex; flex-direction:column; gap:40px; padding:96px 120px 104px; background:radial-gradient(circle at 92% 0%, #fbe3e2 0%, #fbfaf8 45%)">
+  <div style="display:flex; flex-direction:column; gap:22px">
+    <p style="font-family:'JetBrains Mono', monospace; font-size:26px; font-weight:700; letter-spacing:2px; color:#c3201f">// ⑤ 클라이언트는 사용자 손 안에</p>
+    <h2 style="font-family:'Black Han Sans', sans-serif; font-size:64px; font-weight:400; line-height:1.28; letter-spacing:0; color:#16181d">정답 비밀번호는 서버 밖으로 나가지 않는다</h2>
+  </div>
+  <div style="display:flex; flex-direction:row; gap:28px; align-items:center">
+    <div style="width:480px; display:flex; flex-direction:column; gap:16px; padding:30px 34px; background:#ffffff; border:2px solid #e4e5e9; border-radius:26px; box-shadow:0 6px 20px #16181d0f">
+      <div style="display:flex; flex-direction:row; gap:14px; align-items:center">
+        <x-icon name="Globe" style="width:44px; height:44px; color:#1f5fd1"></x-icon>
+        <p style="font-family:'Noto Sans KR', Arial, sans-serif; font-size:30px; font-weight:800; color:#1f5fd1">클라이언트</p>
+      </div>
+      <p style="padding:8px 18px; font-family:'Noto Sans KR', Arial, sans-serif; font-size:28px; color:#16181d; background:#f1f2f4; border:2px solid #e4e5e9; border-radius:12px"><span style="color:#5b6170">아이디</span> · hurdoo</p>
+      <p style="padding:8px 18px; font-family:'Noto Sans KR', Arial, sans-serif; font-size:28px; color:#16181d; background:#f1f2f4; border:2px solid #e4e5e9; border-radius:12px"><span style="color:#5b6170">비밀번호</span> · ••••••••</p>
+      <p style="font-family:'Noto Sans KR', Arial, sans-serif; font-size:26px; color:#5b6170">사용자가 입력한 값만 있음</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:28px; flex:1">
+      <div style="display:flex; flex-direction:column; gap:6px">
+        <p style="font-family:'Noto Sans KR', Arial, sans-serif; font-size:28px; font-weight:800; color:#c3201f">① 입력한 값만 보냄</p>
+        <div style="display:flex; flex-direction:row; align-items:center">
+          <div style="height:5px; display:flex; flex-direction:column; flex:1; background:#c3201f; border-radius:3px">
+          </div>
+          <p style="font-family:'Noto Sans KR', Arial, sans-serif; font-size:32px; font-weight:800; color:#c3201f">▶</p>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px">
+        <div style="display:flex; flex-direction:row; align-items:center">
+          <p style="font-family:'Noto Sans KR', Arial, sans-serif; font-size:32px; font-weight:800; color:#1f5fd1">◀</p>
+          <div style="height:5px; display:flex; flex-direction:column; flex:1; background:#1f5fd1; border-radius:3px">
+          </div>
+        </div>
+        <p style="font-family:'Noto Sans KR', Arial, sans-serif; font-size:28px; font-weight:800; color:#1f5fd1">③ ‘성공’ 또는 ‘실패’만 돌려줌</p>
+      </div>
+    </div>
+    <div style="width:520px; display:flex; flex-direction:column; gap:16px; padding:30px 34px; background:#15171c; border:2px solid #15171c; border-radius:26px">
+      <div style="display:flex; flex-direction:row; gap:14px; align-items:center">
+        <x-icon name="Lock" style="width:44px; height:44px; color:#ffc24d"></x-icon>
+        <p style="font-family:'Noto Sans KR', Arial, sans-serif; font-size:30px; font-weight:800; color:#f4f5f7">서버</p>
+      </div>
+      <p style="font-family:'JetBrains Mono', monospace; font-size:28px; line-height:1.6; white-space:nowrap; color:#e8eaee">user_pw = <span style="color:#ffc24d">"asdf1234!!"</span></p>
+      <p style="font-family:'Noto Sans KR', Arial, sans-serif; font-size:28px; line-height:1.5; color:#e8eaee">② 입력값과 정답을 비교</p>
+      <p style="font-family:'Noto Sans KR', Arial, sans-serif; font-size:26px; color:#8a909c">정답은 여기에만 있음</p>
+    </div>
+  </div>
+  <div style="flex:1"></div>
+  <div style="display:flex; flex-direction:column; padding:18px 0 18px 32px; background:linear-gradient(90deg, #fbeceb 0%, #fbfaf800 100%); border-left:6px solid #c3201f">
+    <p style="font-family:'Noto Sans KR', Arial, sans-serif; font-size:31px; line-height:1.6; color:#16181d"><span style="color:#c3201f"><b>POINT</b></span> · 서버는 정답을 알려주지 않고, <b>맞았는지 여부</b>만 알려줍니다.</p>
+  </div>
+  <img src="/slides/kucc-logo.svg" alt="KUCC 로고" style="position:absolute; top:80px; right:120px; width:60px; height:72px; object-fit:contain">
+  <aside>그럼 안전하게 처리하려면 어떻게 해야 할까요? 비밀번호는 서버에서만 알고 있고, 클라이언트는 사용자가 입력한 값만 서버로 보내줘야 합니다. 서버는 둘이 일치하는지를 확인한 뒤, 클라이언트로 정답 비밀번호를 보내주는 게 아니라 '일치하는지 여부'만 보내줘야 해요.</aside>
+</section>

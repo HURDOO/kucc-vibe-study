@@ -1,0 +1,98 @@
+{
+  "title": "KUCC 바이브코딩 스터디 2주차",
+  "order": [
+    "cover",
+    "recap",
+    "today",
+    "agenda",
+    "div-brief",
+    "skill-brief",
+    "new-folder",
+    "scope",
+    "impl",
+    "div-server",
+    "server-program",
+    "mc-intro",
+    "mc-single",
+    "mc-photo",
+    "mc-lan",
+    "address",
+    "front-back",
+    "inspect",
+    "login-quiz",
+    "login-answer",
+    "server-rule",
+    "div-try",
+    "checklist",
+    "network",
+    "network-lms",
+    "div-agents",
+    "ctx",
+    "new-chat",
+    "auto-insert",
+    "week1-agents",
+    "my-agents",
+    "agents-write",
+    "chat-a",
+    "chat-a-check",
+    "harness",
+    "decisions-check",
+    "chat-b",
+    "div-news",
+    "news",
+    "div-tunnel",
+    "tunnel-why",
+    "tunnel-open",
+    "share",
+    "csv-count",
+    "skill-save",
+    "div-skills",
+    "sk-why",
+    "sk-index",
+    "sk-file",
+    "sk-compare",
+    "sk-check",
+    "div-wrap",
+    "filled-brief",
+    "next",
+    "end"
+  ],
+  "sections": {
+    "s1": {
+      "description": "시작하기: 지난주 돌아보기와 오늘의 흐름",
+      "start": "cover"
+    },
+    "s2": {
+      "description": "BRIEF 스킬로 기획서를 직접 쓰고 구현 맡기기",
+      "start": "div-brief"
+    },
+    "s3": {
+      "description": "서버와 클라이언트: 요청과 응답, localhost, 프론트와 백엔드, 어디서 처리할까",
+      "start": "div-server"
+    },
+    "s4": {
+      "description": "만든 커뮤니티 써보기와 Network 탭",
+      "start": "div-try"
+    },
+    "s5": {
+      "description": "AGENTS.md로 기억 남기기: 새 채팅은 빈 종이, 결정은 docs에",
+      "start": "div-agents"
+    },
+    "s6": {
+      "description": "바이브코딩 근황",
+      "start": "div-news"
+    },
+    "s7": {
+      "description": "내 노트북을 인터넷에 열기: 터널, 서로 놀러가기, 스킬로 저장",
+      "start": "div-tunnel"
+    },
+    "s8": {
+      "description": "Skills 정리: 목차만 붙이고 필요할 때 펼쳐보기",
+      "start": "div-skills"
+    },
+    "s9": {
+      "description": "오늘 채운 빈칸과 3주차 예고",
+      "start": "div-wrap"
+    }
+  }
+}
